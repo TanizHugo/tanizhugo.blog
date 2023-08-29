@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Linux的Bash——（四）Bash shell 的操作环境 | Hugo Blog</title>
+  <meta name="description" content="何为数据流重导向：将数据重新传递到其他地方去那我们的数据一般传输去哪？屏幕啊！大多数情况下我们执行的命令数据最后都会传递到我们的屏幕，那我们可以传递到其他地方吗？当然可以，这就是我们这章要学的 什么是数据流重导向要理解什么是数据路重导向，首先需要了解一下命令的运行结果，下图5.1展示了命令运行过程的数据传输情况   图5.1    我们在Bash当中运行一个命令的时候，这个命令可能会由文件读取数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux的Bash——（四）Bash shell 的操作环境">
+<meta property="og:url" content="http://example.com/posts/linux5.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="何为数据流重导向：将数据重新传递到其他地方去那我们的数据一般传输去哪？屏幕啊！大多数情况下我们执行的命令数据最后都会传递到我们的屏幕，那我们可以传递到其他地方吗？当然可以，这就是我们这章要学的 什么是数据流重导向要理解什么是数据路重导向，首先需要了解一下命令的运行结果，下图5.1展示了命令运行过程的数据传输情况   图5.1    我们在Bash当中运行一个命令的时候，这个命令可能会由文件读取数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgs.ovh/i/2023/08/20/64e1ff00d09c9.png">
+<meta property="article:published_time" content="2022-08-08T10:15:22.000Z">
+<meta property="article:modified_time" content="2023-08-21T03:40:30.219Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgs.ovh/i/2023/08/20/64e1ff00d09c9.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/linux5.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux/use5" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux的Bash——（四）Bash shell 的操作环境
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/linux5.html" class="article-date">
+	  <time datetime="2022-08-08T10:15:22.000Z" itemprop="datePublished">2022-08-08</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/linux5.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>何为数据流重导向：将数据重新传递到其他地方去<br>那我们的数据一般传输去哪？屏幕啊！大多数情况下我们执行的命令数据最后都会传递到我们的屏幕，那我们可以传递到其他地方吗？当然可以，这就是我们这章要学的</p>
+<h2 id="什么是数据流重导向"><a href="#什么是数据流重导向" class="headerlink" title="什么是数据流重导向"></a>什么是数据流重导向</h2><p>要理解什么是数据路重导向，首先需要了解一下命令的运行结果，下图5.1展示了命令运行过程的数据传输情况</p>
+<center>
+<img src="https://i.imgs.ovh/i/2023/08/20/64e1ff00d09c9.png"/><br/>
+<font size=2>图5.1</font>
+</center>
+
+
+<p>我们在Bash当中运行一个命令的时候，这个命令可能会由文件读取数据，经过处理之后，再将数据输出到屏幕上。图中 <strong>standard output</strong> 和 <strong>standard output error</strong> 分别代表了 <strong>标准输出</strong> 和 <strong>标准错误输出</strong> </p>
+<h3 id="Standard-output-与-Standard-error-output"><a href="#Standard-output-与-Standard-error-output" class="headerlink" title="Standard output 与 Standard error output"></a>Standard output 与 Standard error output</h3><p>简单理解<br>标准输出：命令运行所回传的正确的信息<br>标准错误输出：命令运行失败后，所回传的错误信息</p>
+<p>不管是正确或者是错误的数据都是默认输出到屏幕上，这不是我们想要的，一班正确的内容就是我们想看到的内容，而错误的内容我们就像保留下方便修改，由此可以通过特殊字符将信息传递到别的地方去：</p>
+<pre><code># 例子1：将错误的输出信息存储到 stderr文件中
+[tanzitao@master ~]$ cat test.txt an.txt 2&gt; stderr  &lt;-- 将错误的数据重导向到文件中
+this is a test file                                 &lt;-- 正确的内容打印在了屏幕上
+[tanzitao@master ~]$ cat stderr                     &lt;-- 查看保留错误的文件
+cat: an.txt: 没有那个文件或目录                      &lt;-- 错误的内容保留在了文件内
+</code></pre>
+<p>一般常用的几个数据导向需要记住：</p>
+<ul>
+<li>1&gt;: 以覆盖的方法将[正确的数据] 输出到指定的文件或者装置上 </li>
+<li>1&gt;&gt;: 以累加的方法将[正确的数据] 输出到指定的文件或者装置上 </li>
+<li>2&gt;: 以覆盖的方法将[错误的数据] 输出到指定的文件或者装置上 </li>
+<li>2&gt;&gt;: 以累累加的方法将[错误的数据] 输出到指定的文件或者装置上</li>
+</ul>
+<p>需要注意的是 <strong>1&gt;&gt;</strong> 和 <strong>2&gt;&gt;</strong> 中间是没有空格的</p>
+<h3 id="dev-null-垃圾桶黑洞装置与特殊写法"><a href="#dev-null-垃圾桶黑洞装置与特殊写法" class="headerlink" title="&#x2F;dev&#x2F;null 垃圾桶黑洞装置与特殊写法"></a>&#x2F;dev&#x2F;null 垃圾桶黑洞装置与特殊写法</h3><p>想象一下，如果我知道错误信息会发生，所以就是要将错误信息忽略掉不显示呢？这个时候黑洞装置 <strong>&#x2F;dev&#x2F;null</strong> 就很重要了,因为所有的内容都会被扔掉</p>
+<pre><code># 例子2：将错误的输出信息存扔掉不显示
+[tanzitao@master ~]$ find /home -name .bashrc               &lt;-- 直接查询所有创建的账号
+find: ‘/home/tzz’: 权限不够                                  &lt;-- 因为这些账号不是我们创建的所以不能进入
+/home/tanzitao/.bashrc
+[tanzitao@master ~]$ find /home -name .bashrc 2&gt; /dev/null   &lt;-- 附带条件，将错误的信息全部扔到 /dev/null 里
+/home/tanzitao/.bashrc                                       &lt;-- 只显示一条
+</code></pre>
+<p>如果我们既要保留正确命令又要保留错误的命令，并且写入同一文件，那么就需要参考以下正确写法</p>
+<pre><code># 例子3：将输出的内容输入到同一文件
+[tanzitao@master ~]$ find /home -name .bashrc &gt; list 2&gt; list    &lt;-- 错误写法 
+[tanzitao@master ~]$ find /home -name .bashrc &gt; list 2&gt;&amp;1  2&gt;&amp;1 &lt;-- 语法正确
+[tanzitao@master ~]$ find /home -name .bashrc &amp;&gt; list           &lt;-- 正确
+</code></pre>
+<h3 id="standard-input-与"><a href="#standard-input-与" class="headerlink" title="standard input : &lt; 与 &lt;&lt;"></a>standard input : &lt; 与 &lt;&lt;</h3><p>在了解到 stderr与stdout后，那个 <strong>&lt;</strong> 和 <strong>&lt;&lt;</strong> 又代表什么意思呢？<br>简单来说就是[将原本需要键盘输入的数据，改为有文件内容来取代]。我们先来了解下什么是键盘输入</p>
+<pre><code># 例子4：使用键盘输入创建文件
+[tanzitao@master ~]$ cat &gt; catfile     &lt;-- 利用 [&gt;] 创建文件并向里输入内容
+test                                   &lt;-- 一下都是输入的内容
+this
+file
+is  
+catfile
+</code></pre>
+<p>由于加入 &gt; 在cat之后，所以catile会被主动创建，而内容就是键盘敲的数据，只不过</p>
+<pre><code># 例子5：使用[cat]直接将输入信息输出到[catfile]中，且当由键盘输入eof的时候，该次输入就结束
+[tanzitao@master ~]$ cat &gt; catfile &lt;&lt; &quot;eof&quot;    
+&gt; test              &lt;-- 以下是输入内容
+&gt; this is a file
+&gt; eof               &lt;-- 遇到暂停符就退出输入流入
+</code></pre>
+<h2 id="命令运行的判断依据"><a href="#命令运行的判断依据" class="headerlink" title="命令运行的判断依据"></a>命令运行的判断依据</h2><p>在某些情况下，许多的命令我想要一次输入去运行，而不是分多次运行，那该怎么办呢？一种可以通过 <strong>shell script</strong> 撰写脚本运行，另一种是通过 <strong>;</strong> 或者 <strong>|</strong> 间隔开内容达到一次输入都条指令的形式</p>
+<h3 id="cmd-cmd-（不考虑命令相关性的连续命令下达）"><a href="#cmd-cmd-（不考虑命令相关性的连续命令下达）" class="headerlink" title="[cmd ; cmd] （不考虑命令相关性的连续命令下达）"></a>[cmd ; cmd] （不考虑命令相关性的连续命令下达）</h3><p>在命令与命令之间利用分号(;)隔开，这样一来，分号前的命令运行完后就会立刻执行后面的任务，往往这些命令之间没有太大的关联性，例如我们需要先更新我们的下载器，再进行模块的下载</p>
+<pre><code>例子1：更新下载apt-get；利用apt-get下载内容
+[tanzitao@master ~]$ apt-get update; apt install ninja-build &lt;-- 以顿号分隔，不用考略之间的连续性
+</code></pre>
+<h3 id="（命令回传值）与-和"><a href="#（命令回传值）与-和" class="headerlink" title="$? （命令回传值）与 &amp;&amp; 和 ||"></a>$? （命令回传值）与 &amp;&amp; 和 ||</h3><p>“有相关联性的连续命令”主要判断依据就是：前一个命令是否正确运行的对于后一指令是否有影响</p>
+<p>若上一条命令运行结果正确，那么Linux底下会回传一个 <strong>$? &#x3D; 0</strong> 的回传值。有了回传值的结果就能用 <strong>&amp;&amp;</strong> 和 <strong>||</strong> 判断后续的命令是否运行</p>
+<table>
+<thead>
+<tr>
+<th>命令下达情况</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cmd1 &amp;&amp; cmd2</td>
+<td>1. 若cmd1运行完毕且正确运行 （$?&#x3D;0），则开始运行cmd2<br/>2. 若cmd1运行完毕且为错误 （$?!&#x3D;0），则cmd2不运行</td>
+</tr>
+<tr>
+<td>cmd1 || cmd2</td>
+<td>1. 若cmd1运行完毕且正确运行（$?&#x3D;0），则cmd2不运行<br/>2. 若cmd1运行完毕且为错误，则开始运行cmd2</td>
+</tr>
+</tbody></table>
+<ul>
+<li>ps cmd1和cmd2都是命令</li>
+</ul>
+<p>下面做一个测试：<br>（1）先判断一个目录是否存在；<br>（2) 若存在才在该目录底下创建一个文件</p>
+<pre><code>例子1：使用ls查阅目录 /test/abc 是否存在，如果存在就在该目录下创建 touch.txt 文件
+[tanzitao@master ~]$ ls test/abc &amp;&amp; touch test/abc/touch.txt
+ls: 无法访问test/abc: 没有那个文件或目录            &lt;-- 直接报错 显示没有该文件，但是没有touch的错误，表示touch并没有运行
+[tanzitao@master ~]$ mkdir test/abc               &lt;-- 在test目录下创建abc文件夹
+[tanzitao@master ~]$ ls test/abc &amp;&amp; touch test/abc/touch.txt  &lt;-- 成功执行且没有报错
+[tanzitao@master ~]$ ls test/abc
+touch.txt                                          &lt;-- 文件夹下创建了 touch.txt 文件
+
+
+例子2：紧接着上面一步，报错的时文件不是不存在吗？那我们换一条命令，如果文件夹不存在，那就生成一个文件夹
+[tanzitao@master ~]$ ls test/abc || mkdir test/abc
+ls: 无法访问test/abc: 没有那个文件或目录
+[tanzitao@master ~]$ ls test/
+abc
+
+
+例子3：我不清楚 test/abc 文件夹是否存在，但是我想创建 test/abc/touch.txt 
+[tanzitao@master ~]$ ls test/abc || mkdir test/abc &amp;&amp; touch test/abc/touch.txt     &lt;-- 结合例子1和2的语句
+ls: 无法访问test/abc: 没有那个文件或目录                                             &lt;-- 会报错因为 ls查询错误
+[tanzitao@master ~]$ ls test/abc/
+touch.txt                                                                           &lt;-- 命令执行成功
+</code></pre>
+<p>例子3无论在什么情况下都能成功运行，我们可以分析下这是为什么？</p>
+<ul>
+<li>（1）如果 <strong>test&#x2F;abc</strong> 文件夹不存在，查询文件夹命令: <strong>ls test&#x2F;abc</strong> 执行错误，返回 $?!&#x3D;0,（2）因为 <strong>||</strong> 存在的缘故，执行创建文件夹命令: <strong>mkdir test&#x2F;abc</strong>所以回传 $?&#x3D;0,（3）因为 <strong>&amp;&amp;</strong> 遇到 <strong>$?&#x3D;0</strong> 的缘故，会执行创建文件语句: <strong>touch test&#x2F;abc&#x2F;touch.txt</strong>,（4）最终文件创建成功</li>
+<li>（2）如果 <strong>test&#x2F;abc</strong> 文件夹存在，查询文件夹命令: <strong>ls test&#x2F;abc</strong> 执行正确，返回 $?&#x3D;0,（2）因为 <strong>||</strong> 存在的缘故，不会执行创建文件夹命令,（3）因为 <strong>&amp;&amp;</strong> 遇到 <strong>$?&#x3D;0</strong> 的缘故，会执行创建文件语句: <strong>touch test&#x2F;abc&#x2F;touch.txt</strong>,（4）最终文件创建成功</li>
+</ul>
+<p>总的来说，这样的语句能够极大的方便我们对文件或者信息查询进行操作，不用走一步看一步，在特别庞大的程序中，往往我们对于命令注重的只有结果，因此一定要好好记牢这两种命令运行的判断依据</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/linux5.html" title="Linux的Bash——（四）Bash shell 的操作环境" target="_blank" rel="external">http://example.com/posts/linux5.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/posts/slurm1.html" title="Slurm的基本指令"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/posts/linux4.html" title="Linux的Bash——（四）Bash shell 的操作环境"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

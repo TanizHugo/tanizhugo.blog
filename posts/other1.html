@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Docker搭建个人ChatGPT(潘多拉) | Hugo Blog</title>
+  <meta name="description" content="安装Docker1curl -fsSL https:&#x2F;&#x2F;get.docker.com | sh    启动ChatGPT容器1234# 开发8899端口访问ufw allow 8899docker run  -e PANDORA_CLOUD&#x3D;cloud -e PANDORA_SERVER&#x3D;0.0.0.0:8899 -p 8899:8899 -d pengzhile&#x2F;pandora    域名添加记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker搭建个人ChatGPT(潘多拉)">
+<meta property="og:url" content="http://example.com/posts/other1.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="安装Docker1curl -fsSL https:&#x2F;&#x2F;get.docker.com | sh    启动ChatGPT容器1234# 开发8899端口访问ufw allow 8899docker run  -e PANDORA_CLOUD&#x3D;cloud -e PANDORA_SERVER&#x3D;0.0.0.0:8899 -p 8899:8899 -d pengzhile&#x2F;pandora    域名添加记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/21/NpziYf7yjcolGEX.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/21/pxPNVOrAbcLeEkI.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/21/MyJItHrnsuR9Cel.png">
+<meta property="article:published_time" content="2023-07-05T14:06:33.000Z">
+<meta property="article:modified_time" content="2023-08-21T10:45:34.448Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/21/NpziYf7yjcolGEX.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/other1.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Others/Docker搭建个人ChatGPT(潘多拉)" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker搭建个人ChatGPT(潘多拉)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/other1.html" class="article-date">
+	  <time datetime="2023-07-05T14:06:33.000Z" itemprop="datePublished">2023-07-05</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/other1.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com | sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="启动ChatGPT容器"><a href="#启动ChatGPT容器" class="headerlink" title="启动ChatGPT容器"></a>启动ChatGPT容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开发8899端口访问</span></span><br><span class="line">ufw allow 8899</span><br><span class="line"></span><br><span class="line">docker run  -e PANDORA_CLOUD=cloud -e PANDORA_SERVER=0.0.0.0:8899 -p 8899:8899 -d pengzhile/pandora</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="域名添加记录"><a href="#域名添加记录" class="headerlink" title="域名添加记录"></a>域名添加记录</h4><p>打开<a target="_blank" rel="noopener" href="https://dash.cloudflare.com/">cloudflare</a>  域名-&gt;DNS-&gt;记录<br>添加一条A类型的DNS名称</p>
+<p><img src="https://s2.loli.net/2023/08/21/NpziYf7yjcolGEX.png" alt="image-20230814200348017"></p>
+<h4 id="申请域名"><a href="#申请域名" class="headerlink" title="申请域名"></a>申请域名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装证书工具：</span></span><br><span class="line">curl https://get.acme.sh | sh; apt install socat -y || yum install socat -y; ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">添加软链接：</span></span><br><span class="line">ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">切换CA机构：</span> </span><br><span class="line">acme.sh --set-default-ca --server letsencrypt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开放80和443端口提供访问</span></span><br><span class="line">ufw allow 80</span><br><span class="line">ufw allow 443</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">申请证书方式1：</span> </span><br><span class="line">acme.sh  --issue -d 替换为你的域名 --standalone -k ec-256</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">申请证书方式2：</span> </span><br><span class="line">acme.sh --register-account -m &quot;$&#123;RANDOM&#125;@chacuo.net&quot; --server buypass --force --insecure &amp;&amp; ~/.acme.sh/acme.sh  --issue -d 你的域名 --standalone -k ec-256 --force --insecure --server buypass</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">申请证书方式3：</span></span><br><span class="line">acme.sh --register-account -m &quot;$&#123;RANDOM&#125;@chacuo.net&quot; --server zerossl --force --insecure &amp;&amp; ~/.acme.sh/acme.sh  --issue -d 你的域名 --standalone -k ec-256 --force --insecure --server zerossl</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装证书：</span></span><br><span class="line">acme.sh --install-cert -d 你的域名 --ecc --key-file /opt/cert/gpt-server.key --fullchain-file /opt/cert/gpt-server.crt</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="通过Nginx反向代理"><a href="#通过Nginx反向代理" class="headerlink" title="通过Nginx反向代理"></a>通过Nginx反向代理</h4><p>创建Nginx目录结构</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /opt/nginx/</span><br><span class="line">mkdir -p /opt/cert/</span><br><span class="line">touch /opt/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p>修改<strong>nginx.conf</strong>内容</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局配置</span></span><br><span class="line"><span class="attribute">user</span> nginx;</span><br><span class="line"><span class="attribute">worker_processes</span> auto;</span><br><span class="line"><span class="attribute">error_log</span> /var/log/nginx/<span class="literal">error</span>.log;</span><br><span class="line"><span class="attribute">pid</span> /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 事件模块配置</span></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span> <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">1000m</span>;  <span class="comment"># 上传限制参数1G以内文件可上传</span></span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span> www.ddd.com;  <span class="comment"># 你的域名</span></span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">443</span> ssl http2;  <span class="comment"># 你的域名</span></span><br><span class="line">        <span class="attribute">server_name</span> www.ddd.com;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">ssl_certificate</span> /etc/cert/server.crt;  <span class="comment"># 证书位置</span></span><br><span class="line">        <span class="attribute">ssl_certificate_key</span> /etc/cert/server.key;  <span class="comment"># 证书位置</span></span><br><span class="line"></span><br><span class="line">        <span class="section">location</span> / &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span> http://&#123;本机IP&#125;:8899;  <span class="comment"># 反向代理本地ChatGPT容器，端口一般为8899</span></span><br><span class="line">            <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="section">location</span> <span class="regexp">~ .*\.(js|css)$</span> &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span> http://&#123;本机IP&#125;:8899;  <span class="comment"># 加载js和css文件</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="启动Nginx容器"><a href="#启动Nginx容器" class="headerlink" title="启动Nginx容器"></a>启动Nginx容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">做好挂载和映射启动容器</span></span><br><span class="line">docker run -d --name nginx-continer -p 80:80 -p 443:443 \</span><br><span class="line">	-v /opt/nginx/nginx.conf:/etc/nginx/nginx.conf \</span><br><span class="line">	-v /opt/cert:/etc/cert \</span><br><span class="line">	-v /opt/nginx/html:/etc/nginx/html \</span><br><span class="line">	nginx:latest</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="访问ChatGPT"><a href="#访问ChatGPT" class="headerlink" title="访问ChatGPT"></a>访问ChatGPT</h4><p>浏览器访问域名 ：gpt.xxx.com</p>
+<p><img src="https://s2.loli.net/2023/08/21/pxPNVOrAbcLeEkI.png" alt="image-20230814200821845"></p>
+<h4 id="获取Token"><a href="#获取Token" class="headerlink" title="获取Token"></a>获取Token</h4><p>访问<a target="_blank" rel="noopener" href="http://chat.openai.com/api/auth/session">ChatGPT官网</a>，获取自己的 Access TOKEN：</p>
+<p><img src="https://s2.loli.net/2023/08/21/MyJItHrnsuR9Cel.png" alt="image-20230814201310998"></p>
+<h4 id="完毕"><a href="#完毕" class="headerlink" title="完毕"></a>完毕</h4><p>填入Token，即可完成</p>
+<p>如果访问失效：<br>重新申请Token或chatgpt官方发送一条信息</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/other1.html" title="Docker搭建个人ChatGPT(潘多拉)" target="_blank" rel="external">http://example.com/posts/other1.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/posts/porject2.html" title="利用Docker部署前后端分离项目"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/posts/porject1.html" title="搭建Nginx"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

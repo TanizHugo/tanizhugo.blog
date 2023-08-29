@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Linux下运行Jupyter | Hugo Blog</title>
+  <meta name="description" content="当我拥有了自己的第一台VPS，我就开始考虑：“我是不是应该将一些开发环境部署在我的VPS呢，这样我本地就能省下很多的存储空间，安装更多有意思的东西”。其实在开发中这是非常正常的，要将工作环境和运行环境给区分开来。 Python的开发工具很多，可我独钟的还是PyCharm和Jupyter，前者我觉得适合用于Windows和Mac系统中大的项目开发，后者适合用于Linux进行数据分析、脚本、爬虫或者学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下运行Jupyter">
+<meta property="og:url" content="http://example.com/posts/other2.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="当我拥有了自己的第一台VPS，我就开始考虑：“我是不是应该将一些开发环境部署在我的VPS呢，这样我本地就能省下很多的存储空间，安装更多有意思的东西”。其实在开发中这是非常正常的，要将工作环境和运行环境给区分开来。 Python的开发工具很多，可我独钟的还是PyCharm和Jupyter，前者我觉得适合用于Windows和Mac系统中大的项目开发，后者适合用于Linux进行数据分析、脚本、爬虫或者学">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/23/XVsKUyCh8mLt9Tr.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/23/JxWu34BmnolCUys.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/23/rIWOlKcYMS7TdXj.png">
+<meta property="article:published_time" content="2023-08-24T12:11:09.000Z">
+<meta property="article:modified_time" content="2023-08-23T16:17:28.762Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/23/XVsKUyCh8mLt9Tr.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/other2.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Others/Linux下运行Jupyter" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux下运行Jupyter
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/other2.html" class="article-date">
+	  <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/other2.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>当我拥有了自己的第一台VPS，我就开始考虑：“我是不是应该将一些开发环境部署在我的VPS呢，这样我本地就能省下很多的存储空间，<del>安装更多有意思的东西</del>”。其实在开发中这是非常正常的，要将工作环境和运行环境给区分开来。</p>
+<p>Python的开发工具很多，可我独钟的还是PyCharm和Jupyter，前者我觉得适合用于Windows和Mac系统中大的项目开发，后者适合用于Linux进行数据分析、脚本、爬虫或者学习。</p>
+<p><img src="https://s2.loli.net/2023/08/23/XVsKUyCh8mLt9Tr.png" alt="image-202308231756345"></p>
+<p>谈到部署环境，那肯定离不开的就是<code>Docker</code>，近些找不到工作的日子里，没事就买了VPS捣腾了下Docker，发现其实还是非常实用的，那我就基于Docker来快速安装Jupyter，</p>
+<h4 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h4><p>首先安装Docker到环境当中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">一个sh的脚本，通过判断你的电脑系统自动安装新版docker，当然也可以使用系统命令安装</span></span><br><span class="line">curl -fsSL https://get.docker.com | sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果直接拉镜像会有点慢，因此我们需要改用国内的 Docker Hub 镜像服务器</p>
+<ol>
+<li>编辑&#x2F;etc&#x2F;docker&#x2F;daemon.json 配置文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">编辑配置文件，如果文件不存在，以下命令会自动创建。</span></span><br><span class="line">vi /etc/docker/daemon.json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>将配置信息粘贴到配置文件中，配置信息为 json 格式。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以根据实际需要设置多个国内的镜像服务器</span></span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://n14or9zx.mirror.aliyuncs.com&quot;,</span><br><span class="line">  &quot;https://mirror.ccs.tencentyun.com&quot;,</span><br><span class="line">  &quot;http://registry.docker-cn.com&quot;,</span><br><span class="line">  &quot;http://docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">  &quot;http://hub-mirror.c.163.com&quot;],</span><br><span class="line"></span><br><span class="line">  &quot;log-driver&quot;: &quot;json-file&quot;,</span><br><span class="line">  &quot;log-opts&quot;: &#123;</span><br><span class="line">    &quot;max-size&quot;: &quot;500m&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>重启Docker服务</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload </span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>检查设置是否生效</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info</span><br></pre></td></tr></table></figure>
+
+<p>结果中显示了我们设置的镜像服务器地址，则说明设置已经生效，返回的信息类似下面这样：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Registry Mirrors:</span><br><span class="line"> https://mirror.baidubce.com/</span><br><span class="line">Live Restore Enabled: false</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建Jupyter容器"><a href="#创建Jupyter容器" class="headerlink" title="创建Jupyter容器"></a>创建Jupyter容器</h4><p>docker创建容器，如果镜像库没有镜像会自动拉取</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建工作目录</span></span><br><span class="line">mkdir -p /opt/jupyter/python3.6</span><br><span class="line">chmod -R 777 /opt/jupyter/python3.6</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置token为123456</span></span><br><span class="line">docker run -u root -d \</span><br><span class="line">	--name jupyter-python3.6 \</span><br><span class="line">	-e JUPYTER_ENABLE_LAB=yes \</span><br><span class="line">	-p 8888:8888 \</span><br><span class="line">	-v /opt/jupyter/python3.6:/home/jovyan/work \</span><br><span class="line">	jupyter/scipy-notebook:latest start-notebook.sh --NotebookApp.token=&#x27;123456&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或不设置token直接进入</span></span><br><span class="line">docker run -d -u root \</span><br><span class="line">	--name jupyter-python3.6 \</span><br><span class="line">	-e JUPYTER_ENABLE_LAB=yes \</span><br><span class="line">	-p 8888:8888 \</span><br><span class="line">	-v /opt/jupyter/python3.6:/home/jovyan/work \</span><br><span class="line">jupyter/scipy-notebook:latest start-notebook.sh --NotebookApp.token=&#x27;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建环境"><a href="#创建环境" class="headerlink" title="创建环境"></a>创建环境</h4><p>进入jupyter的容器，进行接下来的操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it jupyter-python3.6 bash</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>conda</code> 安装特定版本的 Python，并加入Jupyter内核：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建环境</span></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --set show_channel_urls yes</span><br><span class="line">conda create -n req python=3.6 -y </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">激活环境</span></span><br><span class="line">conda activate req</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 ipykernel</span></span><br><span class="line">conda install -c conda-forge ipykernel -y</span><br><span class="line">conda install jupyter_client jupyter_core -y</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">向 jupyter notebooke 添加当前环境</span></span><br><span class="line">python -m ipykernel install --user --name=req</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Contrl + D 退出容器</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="查看结果"><a href="#查看结果" class="headerlink" title="查看结果"></a>查看结果</h4><p>打开浏览器输入ip:8888</p>
+<p><img src="https://s2.loli.net/2023/08/23/JxWu34BmnolCUys.png" alt="image-20230823175630374"></p>
+<p>测试环境内核</p>
+<p><img src="https://s2.loli.net/2023/08/23/rIWOlKcYMS7TdXj.png" alt="image-20230823234041616"></p>
+<p>下载你需要的python环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it jupyter-python3.6 /bin/bash -c &quot;source activate req &amp;&amp; pip install Matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/other2.html" title="Linux下运行Jupyter" target="_blank" rel="external">http://example.com/posts/other2.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/posts/network1.html" title="DNS与域名的购买和配置"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/posts/SO4.html" title="自建节点添加 Clash for Windows（模板）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

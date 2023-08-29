@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Linux的Bash——(一)认识Bash | Hugo Blog</title>
+  <meta name="description" content="1.1 硬件、核心与Shell我们都知道对于操作系统来说，肯定离不开Shell编程，为了理解Shell是干什么的，首先理解一下计算机的运行情况。举个例子来说：当我想要电脑发出【音乐】的时候，计算机是怎么运转的呢？  1. 硬件：具备声卡，只有硬件有【声卡芯片】才能发出声音 2. 核心：操作系统的核心就是支持这个芯片组，提供芯片的驱动 3. 应用程序：需要用户输入发出声音的命令  以上就是一个基本的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux的Bash——(一)认识Bash">
+<meta property="og:url" content="http://example.com/posts/linux1.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="1.1 硬件、核心与Shell我们都知道对于操作系统来说，肯定离不开Shell编程，为了理解Shell是干什么的，首先理解一下计算机的运行情况。举个例子来说：当我想要电脑发出【音乐】的时候，计算机是怎么运转的呢？  1. 硬件：具备声卡，只有硬件有【声卡芯片】才能发出声音 2. 核心：操作系统的核心就是支持这个芯片组，提供芯片的驱动 3. 应用程序：需要用户输入发出声音的命令  以上就是一个基本的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-21T21:26:21.000Z">
+<meta property="article:modified_time" content="2023-08-21T03:40:17.475Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/linux1.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux/use1" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux的Bash——(一)认识Bash
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/linux1.html" class="article-date">
+	  <time datetime="2022-07-21T21:26:21.000Z" itemprop="datePublished">2022-07-21</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/linux1.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="1-1-硬件、核心与Shell"><a href="#1-1-硬件、核心与Shell" class="headerlink" title="1.1 硬件、核心与Shell"></a>1.1 硬件、核心与Shell</h2><p>我们都知道对于操作系统来说，肯定离不开Shell编程，为了理解Shell是干什么的，首先理解一下计算机的运行情况。举个例子来说：<strong>当我想要电脑发出【音乐】的时候，计算机是怎么运转的呢？</strong> </p>
+<pre><code>1. 硬件：具备声卡，只有硬件有【声卡芯片】才能发出声音
+2. 核心：操作系统的核心就是支持这个芯片组，提供芯片的驱动
+3. 应用程序：需要用户输入发出声音的命令
+</code></pre>
+<p>以上就是一个基本的步骤，也就是说：<br>1.我必须要【输入】一个命令之后，【硬件】才会通过下达的命令进行工作；<br>2.而【硬件】又怎么会知道我的下达的命令呢？就是通过【核心】（kernel）的控制工作；<br>3.用户输入命令【Shell】和【核心】（kernel）沟通，好让【核心】（kernel）可以控制硬件准确无误的工作。</p>
+<center>
+<img src=https://i.imgs.ovh/i/2023/08/20/64e1decf6f04a.png width=200>
+
+
+<p><font size=2>图1.1.1 硬件、核心与用户之间的关系</font><br/></p>
+</center>
+
+<p>看完上面这幅图其实不难发现，作为用户，我们一般能接触的都是应用程序，就想鸡蛋的外壳一样，包含着我们整个系统，因此这个<strong>应用程序</strong>也被称呼为<strong>壳编程(shell)</strong><br/></p>
+<p>**壳编程(shell)<strong>的功能就是给用户提供一个操作系统的接口，只要你能够操作应用程序的接口都能称之为</strong>壳程序(shell)**。<br/></p>
+<pre><code>1. 狭义壳程序：通过命令行运行的软件，包括Bash等
+2. 广义壳程序：包括图形化接口的软件，因为图形化接口也能的各种应用程序能够呼叫核心工作
+</code></pre>
+<h2 id="1-2-为什么要学习文字接口的shell？"><a href="#1-2-为什么要学习文字接口的shell？" class="headerlink" title="1.2 为什么要学习文字接口的shell？"></a>1.2 为什么要学习文字接口的shell？</h2><ol>
+<li><p>shell具有通用性<br>无论操作系统再怎么个改变，shell的内核都不会发生很大的改变，不同的Linux版本下，所使用的Bash都是一样的</p>
+</li>
+<li><p>在远程管理情况下，文字接口就是比较快<br>Linux的管理常常都是需要通过远程联机的，而远程的联机文字接口的传输速度一定更快，而且不容易出现断线或者是信息外流的问题。</p>
+</li>
+<li><p>Liunx的核心<br>想要真正搞懂一个系统的运行、管理系统的话，shell是绝对离不开的，而且shell能够帮助我们高效的处理文件信息，不需借助外部的任何手段</p>
+</li>
+</ol>
+<h2 id="1-3-系统的合法shell-与-etc-shells-功能"><a href="#1-3-系统的合法shell-与-etc-shells-功能" class="headerlink" title="1.3 系统的合法shell 与 &#x2F;etc&#x2F;shells 功能"></a>1.3 系统的合法shell 与 &#x2F;etc&#x2F;shells 功能</h2><p>在我们了解到<strong>Shell</strong>在整个系统架构中担任的是什么角色，但是也是<strong>Shell</strong>也分为很多不同的版本<br/><br>例如：Bourne SHell(sh)、 C SHell、商业上常用的K SHell，各有特点。至于在Linux使用的这一个版本的就成为<strong>Bourne Again SHell （简称 BASH）</strong><br/></p>
+<p>其实在我们的Linux系统下也是兼容了不同版本的Shell，可以通过 <strong>&#x2F;etc&#x2F;shells</strong>文件查看</p>
+<pre><code>cat /etc/shells   &lt;-- 使用cat查看shells文件的内容
+/bin/sh         &lt;-- 已经被 /bin/bash所取代
+/bin/bash       &lt;-- 就是Linux默认的Shell
+&lt;...等等就不一一列出来了&gt;
+</code></pre>
+<p><strong>&#x2F;etc&#x2F;shells</strong>这个文件为什么会存在？这是因为系统的某些服务在运行的过程中，回去检车使用者能够使用的shells，而这些shell的查询就是借由 <strong>&#x2F;etc&#x2F;shells</strong>这个文件。<br/><br>同时在用户登录Linux的使用，系统就会分配一个shell进行工作，而这个登录取得shell就记录在 <strong>&#x2F;etc&#x2F;passwd</strong>这个文件内</p>
+<pre><code>cat /etc/passwd | head -n 3  
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+</code></pre>
+<h2 id="1-4-Bash-shell-的功能"><a href="#1-4-Bash-shell-的功能" class="headerlink" title="1.4 Bash shell 的功能"></a>1.4 Bash shell 的功能</h2><ol>
+<li><p>命令编辑功能（history）<br>Bash可以记忆近1000个命令，用户可以通键盘的 <strong>[上下键]</strong> 查询命令。<br>每条命令都被记录在 <code>~/.bash_history</code> ，不过需要注意的是，<code>~/.bash_history</code> 记录的是前一次登录所运行过的命令，这一次登录所运行的命令都被缓存在内存当中，当成功注销系统后，才会将新的命令记忆录到 <code>~/.bash_history</code> 当中。</p>
+</li>
+<li><p>命令与文件补全功能（**[tab]**]的好处）<br>Bash可以在输入命令的时候，只要输出前几个关键字按下 <strong>[tab]</strong> 自动将命令或者文件补齐<br>(1) 少打很多字，提高效率<br>(2) 输入的数据绝对是正确的！<br>同时如果想知道在当前环境下所有可以运行的命令有几个，可以直接在bash的提示字符后面连续按两下 <strong>[tab]</strong>,如果想知道”c”开头的命令有什么？直接按下 **c[tab][tab]**就可以了</p>
+</li>
+<li><p>命令别名配置功能（alias）<br>Bash可以将命令重新赋予别名，使用关键字 <strong>alias</strong>命令执行，例如 : alias lm&#x3D;’ls -al’<br>(1) 简化代码，针对特别长，需要用到 <strong>管线</strong>的命令，起到简化作用<br>(2) 防止某些代码的直接执行，避免错误，例如: alias rm&#x3D;’rm -r’,这用做就能在每次删除文件或者文件夹之前再次确认是否删除</p>
+</li>
+<li><p>工作控制、前景背景控制（job control, foreground, background）<br>Bash可以提供用户在单一登录的环境中，达到多任务运行的目的。并且尅随时将工作人道背景当中运行，而不会因为使用 <strong>[ctrl]+c</strong> 使得程序终止</p>
+</li>
+<li><p>程序化脚本（shell scripts）<br>Bash可以将日常管理下打的连续命令写成一个文件，整个设计就想是一个小型的程序语言，而在Bash仅仅使用简单的shell scripts就可以完成了</p>
+</li>
+<li><p>通配符（Wildcard）<br>Bash支持许多的通配符来帮助用户查询与下达命令，举个例子如果我想知道 ~&#x2F;下有多少t开头的文件，可以通过 <strong>ls -l ~&#x2F;t*</strong> 命令来查询</p>
+</li>
+</ol>
+<h2 id="1-5-Bash-shell的内建命令：type"><a href="#1-5-Bash-shell的内建命令：type" class="headerlink" title="1.5 Bash shell的内建命令：type"></a>1.5 Bash shell的内建命令：type</h2><p>在Bash当中，<strong>内建</strong>了许多的命令，例如: <strong>cd、umask</strong><br>通过 <strong>type</strong> 可以知道命令是来自外部还是内建在bash当中</p>
+<pre><code>type [-tpa] name
+# 选项和参数：
+    ： 在不加入任何参数的时候，type会显示出name是外部命令还是内建命令
+-t  ： 当加入了-t的参数后，type会将name以下的内容显示出他的意义：
+        file ： 表示为外部命令
+        alias： 表示改命令为命令别名所配置的名称
+        builtin： 表示改命令为bash内建的命令功能
+-p  ： 如果后面接的name为外部命令，才能显示完整的文件名
+-a  ： 会由PATH变量定义的路径中，将所有含有name的命令都列出来，包含了alias
+
+范例一：查询一下ls这个命令是否有内建
+[tanzitao@master ~]$ type ls              
+ls 是 `ls --color=auto&#39; 的别名    &lt;-- 没有加任何的参数，列出最主要的使用情况
+[tanzitao@master ~]$ type -t ls   &lt;-- 仅仅列出ls运行时候的依据
+alias
+[tanzitao@master ~]$ type -a ls   &lt;-- 列出了所有的依据
+ls 是 `ls --color=auto&#39; 的别名     &lt;-- 先试用aliase
+ls 是 /usr/bin/ls                 &lt;-- 还有外部命令存在 /bin/ls
+       
+范例二： 查询一下cd和alias这个命令是否有内建
+[tanzitao@master ~]$ type cd
+cd 是 shell 内嵌
+[tanzitao@master ~]$ type alias
+alias 是 shell 内嵌
+[tanzitao@master ~]$
+</code></pre>
+<h2 id="1-6-Bash命令的下达"><a href="#1-6-Bash命令的下达" class="headerlink" title="1.6 Bash命令的下达"></a>1.6 Bash命令的下达</h2><p>在前面我们提及过，为什么在我们以 <strong>文本模式</strong> 进入了我们的Linux系统后，我们就能输入命令与核心(kernal)进行沟通。这是因为用户登录后就会在系统文件 <strong>&#x2F;etc&#x2F;bash</strong> 加载我们的程序，这个程序我们称为壳(Shell)。</p>
+<p>回顾了Bash命令的意义后，接下来就是了解Bash的命令下达方式，举个例子：</p>
+<pre><code>[tanzitao@master ~]$ command [-options] parameter1 parameter2 ... 
+
+command(命令): ls      &lt;-- 查看当前目录内容
+options(选项)：ls -a   &lt;-- 查看当前目录详细内容
+paramenter(参数): ls -a ./test   &lt;-- 查看test目录下所有文件和文件夹的详细内容
+</code></pre>
+<p>说明：<br>（1） 一行命令的第一个输入关键字一定是命令或者可运行文案、<br>（2） 选项部分可有可无，由实际命令来决定，且每个命令所携带的选项都不尽相同<br>（3） 命令、选项 、参数，这三部分之间都是由空格之间区分，且不论之间空几个格运行结果都一样<br>（4） 如果命令太长可以使用 <strong>反斜杠(\)</strong> 跳脱 <strong>[Enter]</strong> 符号，使得命令可以连续下一行<br>    * 注意： <strong>反斜杠(\)</strong> 是立即跟 <strong>[Enter]</strong> 才能换行，甚至一个空格都能有！！！<br>（5） 命令区分大小</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/linux1.html" title="Linux的Bash——(一)认识Bash" target="_blank" rel="external">http://example.com/posts/linux1.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/posts/linux3.html" title="Linux的Bash——（三）命名别名与历史命令"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/posts/linux2.html" title="Linux的Bash——(二)Shell的变量"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

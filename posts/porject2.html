@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>利用Docker部署前后端分离项目 | Hugo Blog</title>
+  <meta name="description" content="本文将采用编写各模块dockerfile的方式，利用docker-compose创建镜像和容器 这里以前端为Vue，后端为Django进行演示 安装docker以及docker-compose12345# 安装Dockercurl -fsSL https:&#x2F;&#x2F;get.docker.com | sh# 安装docker-composeapt-get install	docker-compose -y">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用Docker部署前后端分离项目">
+<meta property="og:url" content="http://example.com/posts/porject2.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="本文将采用编写各模块dockerfile的方式，利用docker-compose创建镜像和容器 这里以前端为Vue，后端为Django进行演示 安装docker以及docker-compose12345# 安装Dockercurl -fsSL https:&#x2F;&#x2F;get.docker.com | sh# 安装docker-composeapt-get install	docker-compose -y">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/24/oiQ8yrfs9EAv5jR.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/24/tvSH7LgwTAMkDh3.png">
+<meta property="article:published_time" content="2023-07-09T11:12:17.000Z">
+<meta property="article:modified_time" content="2023-08-23T16:10:37.712Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="项目搭建">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/24/oiQ8yrfs9EAv5jR.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/porject2.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-project/利用Docker部署前后端分离项目" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用Docker部署前后端分离项目
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/porject2.html" class="article-date">
+	  <time datetime="2023-07-09T11:12:17.000Z" itemprop="datePublished">2023-07-09</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/porject2.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><strong>本文将采用编写各模块dockerfile的方式，利用docker-compose创建镜像和容器</strong></p>
+<p>这里以前端为Vue，后端为Django进行演示</p>
+<h4 id="安装docker以及docker-compose"><a href="#安装docker以及docker-compose" class="headerlink" title="安装docker以及docker-compose"></a>安装docker以及docker-compose</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装Docker</span></span><br><span class="line">curl -fsSL https://get.docker.com | sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装docker-compose</span></span><br><span class="line">apt-get install	docker-compose -y</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="域名申请证书"><a href="#域名申请证书" class="headerlink" title="域名申请证书"></a>域名申请证书</h4><p>添加DNS记录</p>
+<p><img src="https://s2.loli.net/2023/08/24/oiQ8yrfs9EAv5jR.png" alt="image-20230815205400075"></p>
+<p>域名申请证书</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装证书工具：</span></span><br><span class="line">curl https://get.acme.sh | sh; apt install socat -y || yum install socat -y; ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">添加软链接：</span></span><br><span class="line">ln -s  /root/.acme.sh/acme.sh /usr/local/bin/acme.sh</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">切换CA机构：</span> </span><br><span class="line">acme.sh --set-default-ca --server letsencrypt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">申请证书方式1：</span> </span><br><span class="line">acme.sh  --issue -d 替换为你的域名 --standalone -k ec-256</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">申请证书方式2：</span> </span><br><span class="line">acme.sh --register-account -m &quot;$&#123;RANDOM&#125;@chacuo.net&quot; --server buypass --force --insecure &amp;&amp; ~/.acme.sh/acme.sh  --issue -d 你的域名 --standalone -k ec-256 --force --insecure --server buypass</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">申请证书方式3：</span></span><br><span class="line">acme.sh --register-account -m &quot;$&#123;RANDOM&#125;@chacuo.net&quot; --server zerossl --force --insecure &amp;&amp; ~/.acme.sh/acme.sh  --issue -d 你的域名 --standalone -k ec-256 --force --insecure --server zerossl</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装证书：</span></span><br><span class="line">acme.sh --install-cert -d 你的域名 --ecc --key-file /opt/wendy/nginx/cert/wendy-server.key --fullchain-file /opt/wendy/nginx/cert/wendy-server.crt</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建部署目录"><a href="#创建部署目录" class="headerlink" title="创建部署目录"></a>创建部署目录</h4><p>在&#x2F;opt目录下创建自己的项目文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /opt/wendy; cd /opt/wendy</span><br><span class="line">touch mysql-dockerfile python-dockerfile nginx-dockerfile docker-compose.yml</span><br><span class="line">mkdir mysql-db; mkdir python</span><br><span class="line">mkdir -p nginx/cert</span><br><span class="line">mkdir -p nginx/web</span><br><span class="line">touch nginx/nginx.conf</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">防火墙开启端口</span></span><br><span class="line">ufw allow from any to any port 80,8000,443,3306 proto tcp</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将项目所需的文件放在该目录下</span></span><br><span class="line">root@vultr:ls /opt/wendy</span><br><span class="line">docker-compose.yml  mysql-db  mysql-dockerfile  python  python-dockerfile nginx nginx-dockerfile</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ps:<br>mysql-db目录下存放‘.sql’文件</p>
+<p>python目录下存放 python后端文件</p>
+<p>nginx目录下存放 nginx.conf文件、证书、前端文件</p>
+<p>编辑<strong>docker-compose.yml</strong>文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">python:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">python-dockerfile</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">wendy-python-image:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">wendy-python-container</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000:8000&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./python:/opt/wendy/python</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">mysql-dockerfile</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">wendy-mysql-image:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">wendy-mysql-container</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./mysql-db:/docker-entrypoint-initdb.d</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">nginx-dockerfile</span>  </span><br><span class="line">    <span class="attr">image:</span> <span class="string">wendy-nginx-image:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">wendy-nginx-container</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./nginx/nginx.conf:/etc/nginx/nginx.conf</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./nginx/cert:/opt/wendy/nginx/cert</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./nginx/web:/opt/wendy/nginx/web</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>编辑mysql-dockerfile，填入以下内容</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建mysql-dockerfile</span></span><br><span class="line"><span class="comment"># 使用 MySQL 5.7 镜像作为基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> mysql:<span class="number">5.7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量，指定初始化数据库时的用户名、密码和数据库名称</span></span><br><span class="line"><span class="keyword">ENV</span> MYSQL_ROOT_PASSWORD=<span class="number">123456</span></span><br><span class="line"><span class="keyword">ENV</span> MYSQL_DATABASE=wendy_django_db</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对外暴露 MySQL 默认端口 3306（可以省略，根据实际情况）</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3306</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>编辑python-dockerfile，填入以下内容</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建python-dockerfile</span></span><br><span class="line"><span class="comment"># 使用 Python 3.6 镜像作为基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.6</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 pip</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip install --upgrade pip</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /opt/wendy/python</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制项目文件到容器中</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./python /opt/wendy/python</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装项目依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip install -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对外暴露 8000 端口（Django需要）</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在容器启动时运行的命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> python3 manage.py runserver 0.0.0.0:8000</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>因为django项目需要内映射mysql容器，需要修改数据库的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># setiing文件</span></span><br><span class="line"></span><br><span class="line">ALLOWED_HOSTS = [<span class="string">&#x27;43.136.62.137&#x27;</span>, <span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="string">&#x27;*&#x27;</span>, <span class="string">&#x27;wendy-mysql-container&#x27;</span>] 	<span class="comment"># 添加本机ip地址 和 mysql容器</span></span><br><span class="line"></span><br><span class="line">ATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.mysql&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;wendy_django_db&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;USER&#x27;</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;PASSWORD&#x27;</span>: <span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;HOST&#x27;</span>: <span class="string">&#x27;wendy-mysql-container&#x27;</span>,	<span class="comment"># 填写内联mysql容器名</span></span><br><span class="line">        <span class="string">&#x27;PORT&#x27;</span>: <span class="string">&#x27;3306&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>编辑nginx-dockerfile，填入以下内容</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建Nginx容器</span></span><br><span class="line"><span class="comment"># 使用官方的 Nginx 镜像作为基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将自定义的 Nginx 配置文件复制到容器内</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./nginx/nginx.conf /etc/nginx/nginx.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将证书复制到容器内</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./nginx/cert /opt/wendy/nginx/cert</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将项目复制到容器内</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./nginx/web /opt/wendy/nginx/web</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露 Nginx 的默认 HTTP 端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">443</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在容器启动时运行 Nginx 服务器</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>编辑nginx.conf文件</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局配置</span></span><br><span class="line"><span class="attribute">user</span> nginx;</span><br><span class="line"><span class="attribute">worker_processes</span> auto;</span><br><span class="line"><span class="attribute">error_log</span> /var/log/nginx/<span class="literal">error</span>.log;</span><br><span class="line"><span class="attribute">pid</span> /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 事件模块配置</span></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span> <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="comment"># 静态页面（wendy项目）</span></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">        <span class="attribute">server_name</span> wendy.xxx.com;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$server_name</span><span class="variable">$request_uri</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">        <span class="attribute">server_name</span> wendy.xxx.com;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Origin <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Methods <span class="string">&#x27;GET, POST, OPTIONS, PUT, DELETE&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Headers <span class="string">&#x27;DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,X-Total-Count&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Expose-Headers <span class="string">&#x27;X-Total-Count&#x27;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 证书存放位置</span></span><br><span class="line">        <span class="attribute">ssl_certificate</span> /opt/wendy/nginx/cert/wendy-server.crt;</span><br><span class="line">        <span class="attribute">ssl_certificate_key</span> /opt/wendy/nginx/cert/wendy-server.key;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">charset</span> utf-<span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">        <span class="section">location</span> / &#123;</span><br><span class="line">            <span class="attribute">include</span> mime.types;</span><br><span class="line">            <span class="attribute">default_type</span> application/octet-stream;</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 前端项目所在文件夹</span></span><br><span class="line">            <span class="attribute">root</span> /opt/wendy/web/;		</span><br><span class="line">            <span class="attribute">index</span> index.html;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">error_page</span> <span class="number">404</span> /<span class="number">404</span>.html;</span><br><span class="line">        <span class="section">location</span> = /<span class="number">404</span>.html &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">error_page</span> <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span> /50x.html;</span><br><span class="line">        <span class="section">location</span> = /50x.html &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">include</span> /etc/nginx/default.d/<span class="regexp">*.conf</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="docker-compose建立镜像并启动容器"><a href="#docker-compose建立镜像并启动容器" class="headerlink" title="docker-compose建立镜像并启动容器"></a>docker-compose建立镜像并启动容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>运行成功</p>
+<p><img src="https://s2.loli.net/2023/08/24/tvSH7LgwTAMkDh3.png" alt="image-20230816013835707"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/porject2.html" title="利用Docker部署前后端分离项目" target="_blank" rel="external">http://example.com/posts/porject2.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/posts/SO3.html" title="自建节点（详细）"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/posts/other1.html" title="Docker搭建个人ChatGPT(潘多拉)"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

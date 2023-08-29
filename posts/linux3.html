@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Linux的Bash——（三）命名别名与历史命令 | Hugo Blog</title>
+  <meta name="description" content="在早期DOS年代，可以使用 cls 清楚我们屏幕上的信息，但是在Linux当中使用的是 clear 清楚画面。那么我们可不可以让cls等于clear呢？在Bash当然可以，这样的操作成为 命令别名，我们输入的每一条指令都会被记录下来，成为 历史命令  3.1 命令别名配置：alias unalias命令别名的意思就是：将系统存在的命令赋予新的别名，可以一同使用一般在一下几种情况会用到我们的命令别名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux的Bash——（三）命名别名与历史命令">
+<meta property="og:url" content="http://example.com/posts/linux3.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="在早期DOS年代，可以使用 cls 清楚我们屏幕上的信息，但是在Linux当中使用的是 clear 清楚画面。那么我们可不可以让cls等于clear呢？在Bash当然可以，这样的操作成为 命令别名，我们输入的每一条指令都会被记录下来，成为 历史命令  3.1 命令别名配置：alias unalias命令别名的意思就是：将系统存在的命令赋予新的别名，可以一同使用一般在一下几种情况会用到我们的命令别名">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-27T23:10:56.000Z">
+<meta property="article:modified_time" content="2023-08-21T03:40:20.215Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/linux3.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux/use3" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux的Bash——（三）命名别名与历史命令
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/linux3.html" class="article-date">
+	  <time datetime="2022-07-27T23:10:56.000Z" itemprop="datePublished">2022-07-27</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/linux3.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>在早期DOS年代，可以使用 <strong>cls</strong> 清楚我们屏幕上的信息，但是在Linux当中使用的是 <strong>clear</strong> 清楚画面。那么我们可不可以让cls等于clear呢？在Bash当然可以，这样的操作成为 <strong>命令别名</strong>，我们输入的每一条指令都会被记录下来，成为 <strong>历史命令</strong> </p>
+<h2 id="3-1-命令别名配置：alias-unalias"><a href="#3-1-命令别名配置：alias-unalias" class="headerlink" title="3.1 命令别名配置：alias unalias"></a>3.1 命令别名配置：alias unalias</h2><p>命令别名的意思就是：将系统存在的命令赋予新的别名，可以一同使用<br>一般在一下几种情况会用到我们的命令别名：</p>
+<h3 id="（1）管用命令特别长的时候："><a href="#（1）管用命令特别长的时候：" class="headerlink" title="（1）管用命令特别长的时候："></a>（1）管用命令特别长的时候：</h3><p>举个例子来说，让我们要查询隐藏的文档，并且需要长的列出一页一页的翻看，那我们下达的命令为 <strong>ls -al | more</strong> ， 每次都这样输入真的很麻烦，那我们可以通过 <strong>命令别名进行配置</strong></p>
+<pre><code># 例子1：使用alias简洁命令
+[tanzitao@node03 ~]$ alias lm=&#39;ls -al | more&#39;  &lt;-- 雀食节省了很多的空间
+</code></pre>
+<h3 id="（2）可以预防我们误操作："><a href="#（2）可以预防我们误操作：" class="headerlink" title="（2）可以预防我们误操作："></a>（2）可以预防我们误操作：</h3><p>我们经常会去删除文件等，可能我们有时候脑子一抽就把整个文件夹里的所有文件都删除了</p>
+<pre><code># 例子2：使用alias预防误操作
+[tanzitao@node03 ~]$ alias rm=&#39;rm -i&#39;       &lt;-- 这样设置后每次删除都会询问再次确认删除
+</code></pre>
+<h3 id="（3）查看我们所有的命令别名"><a href="#（3）查看我们所有的命令别名" class="headerlink" title="（3）查看我们所有的命令别名"></a>（3）查看我们所有的命令别名</h3><pre><code># 例子3：alias查看所有的命令别名
+[tanzitao@node03 ~]$ alias
+alias egrep=&#39;egrep --color=auto&#39;
+alias fgrep=&#39;fgrep --color=auto&#39;
+alias grep=&#39;grep --color=auto&#39;
+alias l.=&#39;ls -d .* --color=auto&#39;
+alias ll=&#39;ls -l --color=auto&#39;
+alias lm=&#39;ls -al | more&#39;
+alias ls=&#39;ls --color=auto&#39;
+alias rm=&#39;rm -i&#39;            &lt;-- 刚刚设置的内容就存在啦
+alias vi=&#39;vim&#39;              &lt;-- vi和vim 不太一样 vim可以额外做一些语法检测和颜色显示，默认的root是单纯使用vi而已
+alias which=&#39;alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde&#39;
+
+# 可以看到系统内置了许多的命名别名
+</code></pre>
+<h3 id="（4）取消命令别名"><a href="#（4）取消命令别名" class="headerlink" title="（4）取消命令别名"></a>（4）取消命令别名</h3><pre><code>    # 例子4：unalias取消命令别名
+
+    [tanzitao@node03 ~]$ rm 123.txt                 &lt;-- 保留例2中的别名
+    rm: remove regular empty file &#39;123.txt&#39;? yes    &lt;-- 删除前需要用户确认
+    [tanzitao@node03 ~]$ unalias rm                 &lt;-- 使用unalias取消命名
+    [tanzitao@node03 ~]$ rm 456.txt                 &lt;-- 直接删除，没有询问
+</code></pre>
+<h2 id="3-2-历史命令：history"><a href="#3-2-历史命令：history" class="headerlink" title="3.2 历史命令：history"></a>3.2 历史命令：history</h2><p>在bash当中提供有命令历史的服务，可以查询我们曾经下达过的命令，使用 <strong>history</strong> 就可以完成操作，不过这里我们先用命令别名简化下我们的命令</p>
+<pre><code>[tanzitao@node03 ~]$ alias h=&#39;history&#39;              &lt;-- 命令别名 活学活用
+
+[tanzitao@node03 ~]$ history [n]
+[tanzitao@node03 ~]$ history [-c]
+[tanzitao@node03 ~]$ history [-raw] histfiles
+选项与参数：
+n   ：数字，意思是『要列出最近的 n 笔命令行表』的意思！
+-c  ：将目前的 shell 中的所有 history 内容全部消除
+-a  ：将目前新增的 history 命令新增入 histfiles 中，若没有加 histfiles ，
+    则默认写入 ~/.bash_history
+-r  ：将 histfiles 的内容读到目前这个 shell 的 history 记忆中；
+-w  ：将目前的 history 记忆内容写入 histfiles 中！
+</code></pre>
+<h3 id="（1）使用history查看所有的历史"><a href="#（1）使用history查看所有的历史" class="headerlink" title="（1）使用history查看所有的历史"></a>（1）使用history查看所有的历史</h3><pre><code># 例子1：列出目前内存的所有history记忆 注意！当前内存
+
+[tanzitao@node03 ~]$ h
+...                         &lt;-- 前面省略
+159  history
+160  alias h=&#39;history&#39;
+161  h                      &lt;-- 当前命令
+</code></pre>
+<p>列出的信息信息当中一共有两行：<br>第一行：命令所在当前shell当中为第几个命令<br>第二行：命令本身</p>
+<h3 id="（2）使用history-n查看进n调命令"><a href="#（2）使用history-n查看进n调命令" class="headerlink" title="（2）使用history n查看进n调命令"></a>（2）使用history n查看进n调命令</h3><pre><code># 例子2：列出近5条命令
+[tanzitao@node03 ~]$ h 5
+158  rm 456.txt
+159  history
+160  alias h=&#39;history&#39;
+161  h
+162  h 5
+</code></pre>
+<h3 id="（3）使用history-w写入数据"><a href="#（3）使用history-w写入数据" class="headerlink" title="（3）使用history -w写入数据"></a>（3）使用history -w写入数据</h3><pre><code># 例子3：立刻将当前数据写入histfile当中
+[tanzitao@node03 ~]$ h -w               &lt;-- 默认会写入到 &quot;./bash_history&quot;当中
+[tanzitao@node03 ~]$ echo $HISTSIZE     &lt;-- 查看HISTESIZE最多保留多少条记录
+1000
+</code></pre>
+<p>在正常的情况下，历史命令的读取与记录是这样的：</p>
+<ul>
+<li><p>当我们以 bash 登录 Linux 主机之后，系统就会自动的调动文件 <strong>~&#x2F;.bash_history</strong> 读取曾经的命令，至于命令的数量就有 环境变量 <strong>HISTFILESIZE</strong> 决定了</p>
+</li>
+<li><p>假设我这次登陆主机后，共下达过 100 次命令，等我注销时， 系统就会将 101<del>1100 这总共 1000 笔历史命令更新到 **</del>&#x2F;.bash_history** 当中 也就是说，历史命令在我注销时，会将最近的 HISTFILESIZE 笔记录到我的纪录文件当中</p>
+</li>
+<li><p>当然，也可以用 history -w 强制立刻写入的，但是 <strong>~&#x2F;.bash_history</strong> 记录的笔数永远都是 HISTFILESIZE 那么多，旧的信息会被主动的拿掉， 仅保留最新的</p>
+</li>
+</ul>
+<h3 id="（4）”-”命令的使用"><a href="#（4）”-”命令的使用" class="headerlink" title="（4）”!”命令的使用"></a>（4）”!”命令的使用</h3><pre><code>[tanzitao@node03 ~]$ !number
+[tanzitao@node03 ~]$ !command
+[tanzitao@node03 ~]$ !!
+选项与参数：
+number  ：运行第几笔命令的意思；
+command ：由最近的命令向前搜寻『命令串开头为 command』的那个命令，并运行；
+!!      ：就是运行上一个命令(相当于按↑按键后，按 Enter
+
+[tanzitao@node03 ~]$ h 5
+192  alias h=&#39;history&#39;
+193  h
+194  h 5
+195  h 3
+196  h 5
+[tanzitao@node03 ~]$ !194  &lt;-- 运行第194的命令
+[tanzitao@node03 ~]$ !!    &lt;-- 运行上一个命令
+[tanzitao@node03 ~]$ !h    &lt;-- 运行最近一 al 为开头的命令
+</code></pre>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/linux3.html" title="Linux的Bash——（三）命名别名与历史命令" target="_blank" rel="external">http://example.com/posts/linux3.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/posts/linux4.html" title="Linux的Bash——（四）Bash shell 的操作环境"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/posts/linux1.html" title="Linux的Bash——(一)认识Bash"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

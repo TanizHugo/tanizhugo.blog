@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>与VPS快速传输的方法 | Hugo Blog</title>
+  <meta name="description" content="今天我的博客所在的VPS要到期了，我也没打算续费，所以需要迁移到新的VPS上，所以我需要将我的论文和哪些主题文件直接迁移到新的主机上。不过呢因为我新的VPS和旧的VPS之间线路很差（一个国内一个国外），直接scp很慢很慢，于是我就想反正都是要迁移的不如先下载到本机，反正也就留个底，以后还要更新的。然后我就觉得这个速度也太慢了，因为利用WinSCP这些工具或者是其他的，基本都是采用sftp，如果文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与VPS快速传输的方法">
+<meta property="og:url" content="http://example.com/posts/other3.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="今天我的博客所在的VPS要到期了，我也没打算续费，所以需要迁移到新的VPS上，所以我需要将我的论文和哪些主题文件直接迁移到新的主机上。不过呢因为我新的VPS和旧的VPS之间线路很差（一个国内一个国外），直接scp很慢很慢，于是我就想反正都是要迁移的不如先下载到本机，反正也就留个底，以后还要更新的。然后我就觉得这个速度也太慢了，因为利用WinSCP这些工具或者是其他的，基本都是采用sftp，如果文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/26/PoT6QeXp37qbwcO.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/26/bEAuKCVITfFRoh1.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/26/ZAeGUBx6ERjWunc.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/26/HgUGFIXbqNVydm7.png">
+<meta property="article:published_time" content="2023-08-26T23:16:09.000Z">
+<meta property="article:modified_time" content="2023-08-26T15:18:48.051Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/26/PoT6QeXp37qbwcO.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/other3.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Others/与VPS快速传输的方法" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      与VPS快速传输的方法
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/other3.html" class="article-date">
+	  <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/other3.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>今天我的博客所在的VPS要到期了，我也没打算续费，所以需要迁移到新的VPS上，所以我需要将我的论文和哪些主题文件直接迁移到新的主机上。不过呢因为我新的VPS和旧的VPS之间线路很差（一个国内一个国外），直接<code>scp</code>很慢很慢，于是我就想反正都是要迁移的不如先下载到本机，反正也就留个底，以后还要更新的。<br>然后我就觉得这个速度也太慢了，因为利用WinSCP这些工具或者是其他的，基本都是采用sftp，如果文件很小，sftp是完全够用的，一旦文件比较大，sftp就不行了，而我又是很心急的人，我就想找个方法解决这个问题。</p>
+<p><img src="https://s2.loli.net/2023/08/26/PoT6QeXp37qbwcO.png" alt="11231"></p>
+<p>首先就是提出一个很简单的解决思路，既然sftp的方法不好，那我走http不好吗？所以方向很明确，有没有一个服务可以帮我帮我的文件传输通过http完成。</p>
+<h3 id="提速软件CuteHttpFileServer"><a href="#提速软件CuteHttpFileServer" class="headerlink" title="提速软件CuteHttpFileServer"></a>提速软件CuteHttpFileServer</h3><p>官网：<a href="https://link.zhihu.com/?target=http://iscute.cn/chfs">http://iscute.cn/chfs</a></p>
+<p>CuteHttpFileServer&#x2F;CHFS 是一个免费的 HTTP 服务器程序，支持平台广泛，除了 Windows 平台，对 MIPS 和 ARM 架构的 Linux 也都有支持。并且本身界面也很简洁方便，支持上传、下载、二维码下载等。</p>
+<p><img src="https://s2.loli.net/2023/08/26/bEAuKCVITfFRoh1.png" alt="image-20230826165731938"></p>
+<p>程序本身也非常简单，就一个单文件，Windows 版本是有 GUI 界面的版本的，这里就说一下 Linux 下的使用。</p>
+<h3 id="下载软件"><a href="#下载软件" class="headerlink" title="下载软件"></a>下载软件</h3><p>在官网选择适合的版本下载，这里我选择<code>hfs-linux-amd64-2.0.zip</code></p>
+<p><img src="https://s2.loli.net/2023/08/26/ZAeGUBx6ERjWunc.png" alt="image-20230826165854960"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">curl下载zip文件</span></span><br><span class="line">curl -o /opt/chfs-linux-amd64-2.0.zip http://iscute.cn/tar/chfs/2.0/chfs-linux-amd64-2.0.zip &amp;&amp; cd /opt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解压文件</span></span><br><span class="line">mkdir chfs &amp;&amp; unzip chfs-linux-amd64-2.0.zip -d chfs</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>解压下来可以看到其实这个就是一个文件，使用的方法也很简单，以下是基本命令</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>help</strong></td>
+<td>显示帮助信息</td>
+</tr>
+<tr>
+<td><strong>path</strong></td>
+<td>你要共享的目录，默认为程序运行目录。如果需要共享多个目录，则用“|”符号隔开。<strong>注意：如果路径带有空格，则需要将整个路径用引号包住。</strong></td>
+</tr>
+<tr>
+<td><strong>port</strong></td>
+<td>程序使用的端口号，默认为80</td>
+</tr>
+<tr>
+<td><strong>allow</strong></td>
+<td>IP地址过滤，可使用白名单模式或黑名单模式</td>
+</tr>
+<tr>
+<td><strong>rule</strong></td>
+<td>账户及访问权限，允许一个账户多点登陆，默认情况下匿名用户具有读写权限，其语法为：  <strong>RULEITEM1[|RULEITEM2|RULEITEM3…]</strong>  每个RULEITEM代表一个账户信息及其访问权限，多个RULEITEM则用’|’进行分割，RULEITEM的语法为：  <strong>USER:PWD:MASK[:DIR:MASK…]</strong>  每个项由“:”来分隔，前三个项是必须的，分别对应：账户名、账户密码、共享目录根目录的访问权限。后面的可选的项，必须成对出现，用来设定根目录下面的子级目录的访问权限。一些规定：  * 对于匿名用户，前两个项都为空 * 访问权限分为四种：””(不可访问)，”R”(只读)，”W”(读写)，”D”(写+删除)。读权限指的是下载，写权限指上传、新建等操作，删除权限是在写权限的基础上加上删除权限。 * 各项的值应避免出现空白键，’:’及’|’（目录名除外）</td>
+</tr>
+<tr>
+<td><strong>log</strong></td>
+<td>用户操作日志存放目录，默认是程序所在目录下的logs中。禁用日志功能只需将其赋值为空即可。</td>
+</tr>
+<tr>
+<td><strong>file</strong></td>
+<td>配置文件，该文件可配置上述配置项，语法相同，如果配置有效则覆盖对应配置项。另外，一些功能需要通过配置文件进行配置，比如页面自定义和SSL证书设置。<a target="_blank" rel="noopener" href="http://iscute.cn/asset/chfs.ini">下载配置文件模板</a></td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td>显示程序版本号</td>
+</tr>
+</tbody></table>
+<p>使用命令前先做一些准备，优化体验</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改权限</span></span><br><span class="line">chmod -R 755 /opt/chfs/chfs</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加软连接</span></span><br><span class="line">ln -s /opt/chfs/chfs /usr/local/bin/chfs</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>假设我们在&#x2F;opt&#x2F;test目录下有我们需要下载或上传的文件，以下是一些命令例子</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">打开新的终端</span></span><br><span class="line">tmux</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用chfs打开连接</span></span><br><span class="line">chfs --path /opt/test --port 8000</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开放防火墙</span></span><br><span class="line">ufw allow 8000</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器访问就可以看到我们指定目录下的所有内容</p>
+<p><img src="https://s2.loli.net/2023/08/26/HgUGFIXbqNVydm7.png" alt="image-20230826172456167"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/other3.html" title="与VPS快速传输的方法" target="_blank" rel="external">http://example.com/posts/other3.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/posts/network1.html" title="DNS与域名的购买和配置"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

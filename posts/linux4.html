@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Linux的Bash——（四）Bash shell 的操作环境 | Hugo Blog</title>
+  <meta name="description" content="每当我们登录主机的时候，屏幕上总会有一些说明文字，有的会告诉我们上一次登录是什么时候如图 4.1    图4.1    其实聪明的你肯定会想到，这些信息都是可以设置的，因此我们也可以设置欢迎文字等等。此外，在我们开发的过程中，某些运行环境所需的变量以及为了方便开发的命名别名，是不是都可以在登录的时候就主动地帮我们配置好？ 由此进入本章的学习当中，Bash shell 的操作环境 4.1 路径与命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux的Bash——（四）Bash shell 的操作环境">
+<meta property="og:url" content="http://example.com/posts/linux4.html">
+<meta property="og:site_name" content="Hugo_Blog">
+<meta property="og:description" content="每当我们登录主机的时候，屏幕上总会有一些说明文字，有的会告诉我们上一次登录是什么时候如图 4.1    图4.1    其实聪明的你肯定会想到，这些信息都是可以设置的，因此我们也可以设置欢迎文字等等。此外，在我们开发的过程中，某些运行环境所需的变量以及为了方便开发的命名别名，是不是都可以在登录的时候就主动地帮我们配置好？ 由此进入本章的学习当中，Bash shell 的操作环境 4.1 路径与命令">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgs.ovh/i/2023/08/20/64e1fda5647a4.png">
+<meta property="og:image" content="https://i.imgs.ovh/i/2023/08/20/64e1fda4519ba.png">
+<meta property="og:image" content="https://i.imgs.ovh/i/2023/08/20/64e1fda5648bd.png">
+<meta property="article:published_time" content="2022-08-04T16:10:57.000Z">
+<meta property="article:modified_time" content="2023-08-21T03:40:21.311Z">
+<meta property="article:author" content="Taniz Hugo">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgs.ovh/i/2023/08/20/64e1fda5647a4.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/posts/linux4.html">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body class="main-center theme-green" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="" target="_blank">
+          <img class="img-circle img-rotate" src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Taniz Hugo</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">一个热爱学习计算机的普通人</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> GuangZhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux/use4" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux的Bash——（四）Bash shell 的操作环境
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/posts/linux4.html" class="article-date">
+	  <time datetime="2022-08-04T16:10:57.000Z" itemprop="datePublished">2022-08-04</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/linux4.html#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>每当我们登录主机的时候，屏幕上总会有一些说明文字，有的会告诉我们上一次登录是什么时候如图 4.1 </p>
+<center>
+<img src="https://i.imgs.ovh/i/2023/08/20/64e1fda5647a4.png"/><br/>
+<font size=2>图4.1</font>
+</center>
+
+
+<p>其实聪明的你肯定会想到，这些信息都是可以设置的，因此我们也可以设置欢迎文字等等。此外，在我们开发的过程中，某些运行环境所需的变量以及为了方便开发的命名别名，是不是都可以在登录的时候就主动地帮我们配置好？</p>
+<p>由此进入本章的学习当中，Bash shell 的操作环境</p>
+<h2 id="4-1-路径与命令搜寻顺序"><a href="#4-1-路径与命令搜寻顺序" class="headerlink" title="4.1 路径与命令搜寻顺序"></a>4.1 路径与命令搜寻顺序</h2><p>在前面的学习 alias 与 bash 的内建命令过程中，我们都知道系统里其实有不少的ls命令，或者是包括内建的echo命令，那我们是否有过疑惑：Bash怎么知道到底拿那一条命令来执行？</p>
+<p>其实在Bash里面命令的运行顺序可以这样看：<br>(1) 以相对&#x2F;绝对路径运行命令，例如 [ &#x2F;bin&#x2F;ls ] 或者 [ .&#x2F;ls ];<br>(2) 有 alias 找到命令来运行;<br>(3) 由 bash 内建的 (builtin) 命令来运行;<br>(4) 透过 $PATH 这个变量的顺序搜寻到第一个命令来运行;</p>
+<p>如图4.2，当我们直接运行 <strong>&#x2F;bin&#x2F;ls</strong> 会发现使用 <strong>ls</strong> 没有用颜色区分文件和文件夹，但是我们直接运行 <strong>ls</strong> 就有颜色区分。</p>
+<center>
+<img src="https://i.imgs.ovh/i/2023/08/20/64e1fda4519ba.png"/><br/>
+<font size=2>图4.2</font>
+</center>
+
+
+<p>这是因为 <strong>&#x2F;bin&#x2F;ls</strong> 是直接去用该命令下达，而 <strong>ls</strong> 会因为 [ alias ‘ls –color&#x3D;auto’ ] 这个命令别名而先使用</p>
+<p>如果想要了解命令的搜寻的顺序，其实可以透过 <strong>type</strong> 命令进行查询</p>
+<pre><code># 例子1：查看 &quot;echo&quot; 命令的执行方式
+[tanzitao@master ~]$ alias echo=&#39;echo -n&#39;
+[tanzitao@master ~]$ type -a echo
+echo 是 `echo -n&#39; 的别名
+echo 是 shell 内嵌
+echo 是 /usr/bin/echo
+</code></pre>
+<h2 id="4-2-bash的进站与欢迎信息：-etc-issue-etc-motd"><a href="#4-2-bash的进站与欢迎信息：-etc-issue-etc-motd" class="headerlink" title="4.2 bash的进站与欢迎信息： &#x2F;etc&#x2F;issue, &#x2F;etc&#x2F;motd"></a>4.2 bash的进站与欢迎信息： &#x2F;etc&#x2F;issue, &#x2F;etc&#x2F;motd</h2><p>本章开始我们提到了进站会有欢迎信息，其实这些进站信息就卸载了 <strong>&#x2F;etc&#x2F;issue</strong> 这个文件里面</p>
+<pre><code># 例子2：查看 /etc/issue 文件中的欢迎内容
+[tanzitao@master ~]$ cat /etc/issue
+\S
+Kernel \r on an \m
+welcome!
+</code></pre>
+<p>具体的内容可以参考以下表，详细记录了各个代码的意义</p>
+<table>
+<thead>
+<tr>
+<th align="center">代码</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">\d</td>
+<td>本地端时间的日期</td>
+</tr>
+<tr>
+<td align="center">\l</td>
+<td>显示第几个终端机接口</td>
+</tr>
+<tr>
+<td align="center">\m</td>
+<td>显示硬件登记(i386&#x2F;i486&#x2F;i586&#x2F;i686)</td>
+</tr>
+<tr>
+<td align="center">\n</td>
+<td>显示主机的网络名称</td>
+</tr>
+<tr>
+<td align="center">\o</td>
+<td>显示 domian name</td>
+</tr>
+<tr>
+<td align="center">\r</td>
+<td>操作系统的版本(相当于uname -r)</td>
+</tr>
+<tr>
+<td align="center">\t</td>
+<td>显示本地端时间的时间</td>
+</tr>
+<tr>
+<td align="center">\s</td>
+<td>操作系统的名称</td>
+</tr>
+<tr>
+<td align="center">\v</td>
+<td>操作系统的版本</td>
+</tr>
+</tbody></table>
+<p>不过其实这些都无伤大雅，设置来美化一下自己的系统也不错</p>
+<h2 id="4-3-环境配置文件"><a href="#4-3-环境配置文件" class="headerlink" title="4.3 环境配置文件:"></a>4.3 环境配置文件:</h2><p>在我们的Bash系统当中有一些环境配置文件的存在，让Bash在启动时直接读取这些配置文件，用来正常启动我们的Bash。而这些配置文件又可以分为 <strong>全体系统的配置文件</strong> 以及 <strong>用户个人偏好配置文件</strong>。 在前面小几章提到的命名别名与自定义变量都会在我们注销Bash后失效，因此如果我们要长期保留这些内容，就必须写入到配置文件当中才行。</p>
+<h3 id="login与non-login-shell"><a href="#login与non-login-shell" class="headerlink" title="login与non-login shell"></a>login与non-login shell</h3><ul>
+<li><p>login shell：取得Bash时，需要完整的登录流程的（完整登录流程指需要输入用户名和密码），就称为loigin shell</p>
+</li>
+<li><p>non-login shell：取得Bash接口的方法就不需要重复登录，举个简单的例子：在bash当中开启另一个bash（子线程）的时候，就不是完整的登录流程，这样就称为non-login shell了</p>
+</li>
+</ul>
+<h3 id="etc-profile"><a href="#etc-profile" class="headerlink" title="&#x2F;etc&#x2F;profile"></a>&#x2F;etc&#x2F;profile</h3><p><strong>&#x2F;etc&#x2F;profile</strong> 这个配置文件里面有许多重要的变量数据，这个文件在每个用户登录取得Bash程序后都回去读的配置文件（仅限于 login shell登录）<br>因此如果我们想修改我们配置的环境就是改这个部分。但是！千万不要乱改，下表展示了几个重要的配置文件</p>
+<table>
+<thead>
+<tr>
+<th align="center">变量名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">PATH</td>
+<td>回一句UID决定PATH变量要不要包含有 <strong>sbin</strong> 的系统命令目录</td>
+</tr>
+<tr>
+<td align="center">MAIL</td>
+<td>依据账号配置好使用者的mailbox 到 <strong>&#x2F;var&#x2F;spool&#x2F;main&#x2F;账户名</strong></td>
+</tr>
+<tr>
+<td align="center">USER</td>
+<td>根据用户的账号配置此变量的内容</td>
+</tr>
+<tr>
+<td align="center">HOSTNAME</td>
+<td>依据主机的hostname配置此变量的内容</td>
+</tr>
+<tr>
+<td align="center">HISTSIZE</td>
+<td>历史记录保留的最大数量上限</td>
+</tr>
+</tbody></table>
+<p>总结来说，我们只需要记住，用户每次登录Bash都会从 <strong>&#x2F;etc&#x2F;profile</strong>里面获取配置，并且在里面还会呼叫其他的配置文件，别轻易乱动这个文件就对了！</p>
+<h3 id="bash-profile"><a href="#bash-profile" class="headerlink" title="~&#x2F;bash_profile"></a>~&#x2F;bash_profile</h3><p>Bash在读完了 <strong>&#x2F;etc&#x2F;profile</strong> 的整体环境配置后，接下来就是读取使用者user个人的配置文件（仅限于 login shell登录），主要分为一下三个，依次的顺序分别是：</p>
+<ol>
+<li>~&#x2F;.bash_profile</li>
+<li>~&#x2F;.bash_login</li>
+<li>~&#x2F;.profile</li>
+</ol>
+<p>其实Bash的login shell配置只会读取上面三个文件的其中一个，而读取的顺序就是按上面所说，举例来说：只要读取 ~&#x2F;.bash_profile 成功，剩下的两个文件就不会去读取</p>
+<pre><code># 例子1：查看 ~/.bash_profile 文件的内容
+[root@master ~]# cat ~/.bash_profile
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then          &lt;-- 判断并读取 ~/.bashrc
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/bin:/root/miniconda/bin    &lt;-- 下面的内容是在处理个人配置
+export PATH
+WORKON_HOME=~/.virtualenvs
+export WORKON_HOME
+source /usr/local/bin/virtualenvwrapper.sh
+</code></pre>
+<p>发现了吗？在个人配置下存在 <strong>PATH</strong> 这个变量，和我们在 <strong>&#x2F;etc&#x2F;profile</strong> 下的PATH变量是不冲突的，而是属于累加形式，合并在一起，这也意味着如果我们将运行的文件放在自家目录下 <strong>~&#x2F;bin</strong> 程序也是可以被执行的，这就不用次次都使用相对&#x2F;绝对路径运行程序</p>
+<p>在 <strong>.&#x2F;bash_profile</strong> 文件中存在一段用 <strong>if…then…</strong> 完成的配置，这一段的内容就是说：如果在家目录下 <strong>~&#x2F;.bashrc</strong> 文件存在，就读取 <strong>~&#x2F;bashrc</strong> 文件</p>
+<p>最后我们说了这么多，login shell的读取流程如图4.3</p>
+<center>
+<img src="https://i.imgs.ovh/i/2023/08/20/64e1fda5648bd.png"/><br/>
+<font size=2>图4.3</font>
+</center>
+
+
+<h3 id="soucrce"><a href="#soucrce" class="headerlink" title="soucrce"></a>soucrce</h3><p>在上述所提到 Bash当中 <strong>&#x2F;etc&#x2F;profile</strong> 全用户配置文件和 <strong>~&#x2F;.bashrc</strong> 本用户配置文件都是在 login shell的时候才会去读取，当我们将自己的编号配置写入上述文件后，通常都需要注销后再等了，配置才会生效。那我们可不可以跳过注销登录的步骤，直接使他生效，那就需要用到 <strong>source</strong> 这个变量命令了</p>
+<p>你会疑惑：这有什么用？<br>当我们需要用到不同的配置环境文件的时候，一个人需要负责不同的任务开发，每个任务的环境都不一样，那么我们可以每一个环境都创建属于自己的 source变量文件，操作之前直接soucrce一下，就方便啦。</p>
+<h3 id="bashrc"><a href="#bashrc" class="headerlink" title="~&#x2F;.bashrc"></a>~&#x2F;.bashrc</h3><p>说完了 login shell的情况后，接下来我么聊一聊 non-login shell非登录的情况Bash在 non-login shell的时候，读取的配置文件只有 <strong>~&#x2F;.bashrc</strong> </p>
+<pre><code># 例子2：查看 ~/.bashrc 的内容
+[tanzitao@master ~]$ cat ~/.bashrc
+# .bashrc
+
+# User specific aliases and functions
+alias rm=&#39;rm -i&#39;
+alias rp=&#39;cp -i&#39;
+alias mv=&#39;mv -i&#39;
+
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# Uncomment the following line if you don&#39;t like systemctl&#39;s auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+
+alias sudo=&#39;sudo env PATH=$PATH&#39;
+</code></pre>
+<p>特别注意root用户和一般用户下面的 <strong>~&#x2F;.bashrc</strong> 内容是不一样的</p>
+<h2 id="4-4-终端机的环境配置：-stty-set"><a href="#4-4-终端机的环境配置：-stty-set" class="headerlink" title="4.4 终端机的环境配置： stty, set"></a>4.4 终端机的环境配置： stty, set</h2><p>stty是什么，我们且按下不表，直接使用命令： <strong>stty -a</strong> 将所有参数打印出来</p>
+<pre><code># 例子1：列出所有的按键与按键内容
+[tanzitao@master ~]$ stty -a
+speed 9600 baud; rows 30; columns 102; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = &lt;undef&gt;; eol2 = &lt;undef&gt;; swtch = &lt;undef&gt;;
+start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; flush = ^O; min = 1; time = 0;
+-parenb -parodd -cmspar cs8 -hupcl -cstopb cread -clocal -crtscts
+-ignbrk -brkint -ignpar -parmrk -inpck -istrip -inlcr -igncr icrnl ixon -ixoff -iuclc -ixany -imaxbel
+-iutf8
+opost -olcuc -ocrnl onlcr -onocr -onlret -ofill -ofdel nl0 cr0 tab0 bs0 vt0 ff0
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke
+</code></pre>
+<p>stty 就是可以帮配置我们的终端机的输入按键，举个例子来说: <strong>^</strong> 代表 [Ctrl] 按键，<strong>intr &#x3D; ^C</strong> 就代表 <strong>intr命令</strong> 通过 <strong>[Ctrl] + C</strong> 进行了代替</p>
+<ul>
+<li>eof:End of file代表输入结束</li>
+<li>erase：向后删除字符</li>
+<li>intr：给出一个终端的信号到正在run的程序</li>
+<li>kill：删除在目前命令上的所有文字</li>
+<li>quit：送出一个quit的讯号目前正在run的程序</li>
+<li>start：在某个程序停止后，重新启动他的output</li>
+<li>stop：停止目前屏幕的输出</li>
+<li>susp：送出一个 terminal stop 的信息给到正在run的程序</li>
+</ul>
+<p>一下列出Bash默认的组合键：</p>
+<table>
+<thead>
+<tr>
+<th align="center">组合按键</th>
+<th>运行结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Ctrl + C</td>
+<td>终止目前的命令</td>
+</tr>
+<tr>
+<td align="center">Ctrl + D</td>
+<td>输入结束（EOF），例如邮件结束的时候</td>
+</tr>
+<tr>
+<td align="center">Ctrl + M</td>
+<td>就是Enter</td>
+</tr>
+<tr>
+<td align="center">Ctrl + S</td>
+<td>暂停屏幕的输出</td>
+</tr>
+<tr>
+<td align="center">Ctrl + Q</td>
+<td>恢复屏幕的输出</td>
+</tr>
+<tr>
+<td align="center">Ctrl + U</td>
+<td>在提示字符下，将整列命令删除</td>
+</tr>
+<tr>
+<td align="center">Ctrl + Z</td>
+<td>[暂停]目前的命令</td>
+</tr>
+</tbody></table>
+<h2 id="4-5-通配符与特殊字符"><a href="#4-5-通配符与特殊字符" class="headerlink" title="4.5 通配符与特殊字符"></a>4.5 通配符与特殊字符</h2><p>在Bash当中如果我们需要分析任务，查看任务状态等，为了简简便内让那个那我们少不了的就是用通配符协助我们处理，以下是一些常用的通配符：</p>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">*</td>
+<td>代表[0个到无穷个]任意字符</td>
+</tr>
+<tr>
+<td align="center">？</td>
+<td>代表[有且只有一个]字符</td>
+</tr>
+<tr>
+<td align="center">[]</td>
+<td>代表 [在括号内一定有一个] 的字符：[abc]一定有一个字符</td>
+</tr>
+<tr>
+<td align="center">可能是a,b,c中的一个</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">[-]</td>
+<td>代表 [在编码顺序内的所有字符]：[0-9]代表0到9之间的所有数字</td>
+</tr>
+<tr>
+<td align="center">[^]</td>
+<td>代表 [反向选择]：[^abc]一定有一个不在abc中的</td>
+</tr>
+</tbody></table>
+<pre><code># 例子1：查找所有 txt文件
+[tanzitao@master ~]$ ls *.txt
+123.txt  456.txt  abc.txt  chpass.txt
+# 例子2：查找所有 带数字的txt文件
+[tanzitao@master ~]$ ls *[0-9].txt
+123.txt  456.txt
+# 例子3：查找所有 3个字符的txt文件
+[tanzitao@master ~]$ ls ???.txt
+123.txt  456.txt  abc.txt   
+# 例子4：查找所有 不带数字的txt文件
+[tanzitao@master ~]$ ls *[^0-9].txt
+abc.txt  chpass.txt
+</code></pre>
+<p>除此以外，以下还汇总了Bash环境中的特殊字符</p>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">#</td>
+<td>批注符号：这个最常被使用在script当中，视为说明！在后的数据均不运行</td>
+</tr>
+<tr>
+<td align="center">\</td>
+<td>跳脱字符：将特殊字符或者通配符还原成一般字符</td>
+</tr>
+<tr>
+<td align="center">|</td>
+<td>管线(pipe):分割两个管线命令的界定</td>
+</tr>
+<tr>
+<td align="center">;</td>
+<td>连续命令下达的分隔符：连续性命令的界定</td>
+</tr>
+<tr>
+<td align="center">~</td>
+<td>用户的家目录</td>
+</tr>
+<tr>
+<td align="center">$</td>
+<td>取用变量前导符：就是在变量之前需要加的变量取代值</td>
+</tr>
+<tr>
+<td align="center">&amp;</td>
+<td>工作控制：将命令编程背景下工作</td>
+</tr>
+<tr>
+<td align="center">!</td>
+<td>逻辑意义上的 [非] 的意思</td>
+</tr>
+<tr>
+<td align="center">&#x2F;</td>
+<td>目录符号：路径分隔符</td>
+</tr>
+<tr>
+<td align="center">&gt;,&gt;&gt;</td>
+<td>数据流重导向：输出导向，分别是[取代] 和 [累加]</td>
+</tr>
+<tr>
+<td align="center">&lt;,&lt;&lt;</td>
+<td>数据流冲导向：输入导向</td>
+</tr>
+<tr>
+<td align="center">‘’</td>
+<td>不具备变量的置换功能</td>
+</tr>
+<tr>
+<td align="center">“”</td>
+<td>具备变量的置换功能</td>
+</tr>
+<tr>
+<td align="center">&#96;&#96;</td>
+<td>反引号之间有限运行的命令，可以用$()代替</td>
+</tr>
+<tr>
+<td align="center">()</td>
+<td>在中间为字shell（）的起始与结束</td>
+</tr>
+<tr>
+<td align="center">{}</td>
+<td>在中间命令区块的组合</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/posts/linux4.html" title="Linux的Bash——（四）Bash shell 的操作环境" target="_blank" rel="external">http://example.com/posts/linux4.html</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="https://s2.loli.net/2023/08/21/JdX7D4FbScIgZ3q.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="" target="_blank"><span class="text-dark">Taniz Hugo</span><small class="ml-1x">一个热爱学习计算机的普通人</small></a></h3>
+        <div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/posts/linux5.html" title="Linux的Bash——（四）Bash shell 的操作环境"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/posts/linux3.html" title="Linux的Bash——（三）命名别名与历史命令"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+    <div class="copyright">
+    	
+        &copy; 2023 Taniz Hugo
+        
+        <!-- <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div> -->
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
