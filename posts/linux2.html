@@ -21,7 +21,7 @@
   <meta name="description" content="2.1 什么是变量？变量就是以特定的字符串代表不固定的内容 变量的优点又有那些？ (1) 可变性与方便性关于可变性和方便性，我相信如果有接触过至少一门编程语言就能很快Get到这个点，所谓的： 一改全改 ,特别是在脚本程序设计(shell script)中起了非常大的作用对于要反复引入的而又复杂的内容，使用变量真的太合适了，例如我们的：路径、版本名等  补充：硬件环境下，一般也会用到变量来代替值，使">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux的Bash——(二)Shell的变量">
-<meta property="og:url" content="http://example.com/posts/linux2.html">
+<meta property="og:url" content="https://tanizhugo.github.io/tanizhugo.blog/posts/linux2.html">
 <meta property="og:site_name" content="Hugo_Blog">
 <meta property="og:description" content="2.1 什么是变量？变量就是以特定的字符串代表不固定的内容 变量的优点又有那些？ (1) 可变性与方便性关于可变性和方便性，我相信如果有接触过至少一门编程语言就能很快Get到这个点，所谓的： 一改全改 ,特别是在脚本程序设计(shell script)中起了非常大的作用对于要反复引入的而又复杂的内容，使用变量真的太合适了，例如我们的：路径、版本名等  补充：硬件环境下，一般也会用到变量来代替值，使">
 <meta property="og:locale" content="zh_CN">
@@ -33,13 +33,13 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgs.ovh/i/2023/08/20/64e1e44e38aa6.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/posts/linux2.html">
+  <link rel="canonical" href="https://tanizhugo.github.io/tanizhugo.blog/posts/linux2.html">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
   
   
-<link rel="stylesheet" href="/docs/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
   
   
@@ -100,7 +100,7 @@
         
         
         <li class="menu-item menu-item-home">
-          <a href="/docs/.">
+          <a href="/.">
             
             <i class="icon icon-home-fill"></i>
             
@@ -110,7 +110,7 @@
         
         
         <li class="menu-item menu-item-archives">
-          <a href="/docs/archives">
+          <a href="/archives">
             
             <i class="icon icon-archives-fill"></i>
             
@@ -144,7 +144,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/docs/categories/HPC/">HPC</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HPC/">HPC</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -154,7 +154,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/Slurm/" rel="tag">Slurm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Slurm/" rel="tag">Slurm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/docs/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/docs/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/docs/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/docs/tags/Slurm/" style="font-size: 13px;">Slurm</a> <a href="/docs/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/docs/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/docs/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/Slurm/" style="font-size: 13px;">Slurm</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
     </div>
   </div>
 
@@ -173,7 +173,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -192,7 +192,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/other3.html" class="title">与VPS快速传输的方法</a>
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
@@ -207,7 +207,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
@@ -222,7 +222,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/other2.html" class="title">Linux下运行Jupyter</a>
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
@@ -237,7 +237,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
@@ -252,7 +252,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/SO3.html" class="title">自建节点（详细）</a>
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
@@ -288,7 +288,7 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/docs/posts/linux2.html" class="article-date">
+	<a href="/posts/linux2.html" class="article-date">
 	  <time datetime="2022-07-21T21:26:21.000Z" itemprop="datePublished">2022-07-21</time>
 	</a>
 </span>
@@ -296,13 +296,13 @@
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/docs/tags/Linux/" rel="tag">Linux</a>
+	<a class="article-tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/docs/posts/linux2.html#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/linux2.html#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
@@ -701,7 +701,7 @@ small min, big max, nice max
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/posts/linux2.html" title="Linux的Bash——(二)Shell的变量" target="_blank" rel="external">http://example.com/posts/linux2.html</a>
+      <a href="https://tanizhugo.github.io/tanizhugo.blog/posts/linux2.html" title="Linux的Bash——(二)Shell的变量" target="_blank" rel="external">https://tanizhugo.github.io/tanizhugo.blog/posts/linux2.html</a>
     </li>
     
     <li class="post-copyright-license">
@@ -748,7 +748,7 @@ small min, big max, nice max
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/docs/posts/linux1.html" title="Linux的Bash——(一)认识Bash"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/posts/linux1.html" title="Linux的Bash——(一)认识Bash"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
@@ -783,10 +783,10 @@ small min, big max, nice max
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
 
-<script src="/docs/js/plugin.min.js"></script>
+<script src="/js/plugin.min.js"></script>
 
 
-<script src="/docs/js/application.js"></script>
+<script src="/js/application.js"></script>
 
 
     <script>
@@ -799,14 +799,14 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
             TAGS: '标签',
             UNTITLED: '(未命名)',
         },
-        ROOT_URL: '/docs/',
-        CONTENT_URL: '/docs/content.json',
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
     };
     window.INSIGHT_CONFIG = INSIGHT_CONFIG;
 })(window);
 </script>
 
-<script src="/docs/js/insight.js"></script>
+<script src="/js/insight.js"></script>
 
 
 

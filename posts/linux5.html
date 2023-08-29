@@ -21,7 +21,7 @@
   <meta name="description" content="何为数据流重导向：将数据重新传递到其他地方去那我们的数据一般传输去哪？屏幕啊！大多数情况下我们执行的命令数据最后都会传递到我们的屏幕，那我们可以传递到其他地方吗？当然可以，这就是我们这章要学的 什么是数据流重导向要理解什么是数据路重导向，首先需要了解一下命令的运行结果，下图5.1展示了命令运行过程的数据传输情况   图5.1    我们在Bash当中运行一个命令的时候，这个命令可能会由文件读取数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux的Bash——（四）Bash shell 的操作环境">
-<meta property="og:url" content="http://example.com/posts/linux5.html">
+<meta property="og:url" content="https://tanizhugo.github.io/tanizhugo.blog/posts/linux5.html">
 <meta property="og:site_name" content="Hugo_Blog">
 <meta property="og:description" content="何为数据流重导向：将数据重新传递到其他地方去那我们的数据一般传输去哪？屏幕啊！大多数情况下我们执行的命令数据最后都会传递到我们的屏幕，那我们可以传递到其他地方吗？当然可以，这就是我们这章要学的 什么是数据流重导向要理解什么是数据路重导向，首先需要了解一下命令的运行结果，下图5.1展示了命令运行过程的数据传输情况   图5.1    我们在Bash当中运行一个命令的时候，这个命令可能会由文件读取数据">
 <meta property="og:locale" content="zh_CN">
@@ -33,13 +33,13 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgs.ovh/i/2023/08/20/64e1ff00d09c9.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/posts/linux5.html">
+  <link rel="canonical" href="https://tanizhugo.github.io/tanizhugo.blog/posts/linux5.html">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
   
   
-<link rel="stylesheet" href="/docs/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
   
   
@@ -100,7 +100,7 @@
         
         
         <li class="menu-item menu-item-home">
-          <a href="/docs/.">
+          <a href="/.">
             
             <i class="icon icon-home-fill"></i>
             
@@ -110,7 +110,7 @@
         
         
         <li class="menu-item menu-item-archives">
-          <a href="/docs/archives">
+          <a href="/archives">
             
             <i class="icon icon-archives-fill"></i>
             
@@ -144,7 +144,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/docs/categories/HPC/">HPC</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HPC/">HPC</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -154,7 +154,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/Slurm/" rel="tag">Slurm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/docs/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/HPC/" rel="tag">HPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Science-Online/" rel="tag">Science Online</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Slurm/" rel="tag">Slurm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B6%E4%BB%96/" rel="tag">其他</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" rel="tag">项目搭建</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/docs/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/docs/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/docs/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/docs/tags/Slurm/" style="font-size: 13px;">Slurm</a> <a href="/docs/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/docs/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/docs/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
+      <a href="/tags/HPC/" style="font-size: 13px;">HPC</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/Science-Online/" style="font-size: 13.75px;">Science Online</a> <a href="/tags/Slurm/" style="font-size: 13px;">Slurm</a> <a href="/tags/%E5%85%B6%E4%BB%96/" style="font-size: 13.5px;">其他</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 13px;">网络</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" style="font-size: 13.25px;">项目搭建</a>
     </div>
   </div>
 
@@ -173,7 +173,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/docs/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -192,7 +192,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/other3.html" class="title">与VPS快速传输的方法</a>
+                <a href="/posts/other3.html" class="title">与VPS快速传输的方法</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-26T23:16:09.000Z" itemprop="datePublished">2023-08-26</time>
@@ -207,7 +207,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/network1.html" class="title">DNS与域名的购买和配置</a>
+                <a href="/posts/network1.html" class="title">DNS与域名的购买和配置</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-24T16:44:02.000Z" itemprop="datePublished">2023-08-24</time>
@@ -222,7 +222,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/other2.html" class="title">Linux下运行Jupyter</a>
+                <a href="/posts/other2.html" class="title">Linux下运行Jupyter</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-24T12:11:09.000Z" itemprop="datePublished">2023-08-24</time>
@@ -237,7 +237,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
+                <a href="/posts/SO4.html" class="title">自建节点添加 Clash for Windows（模板）</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-08-01T09:13:52.000Z" itemprop="datePublished">2023-08-01</time>
@@ -252,7 +252,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/docs/posts/SO3.html" class="title">自建节点（详细）</a>
+                <a href="/posts/SO3.html" class="title">自建节点（详细）</a>
               </p>
               <p class="item-date">
                 <time datetime="2023-07-29T15:49:37.000Z" itemprop="datePublished">2023-07-29</time>
@@ -288,7 +288,7 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/docs/posts/linux5.html" class="article-date">
+	<a href="/posts/linux5.html" class="article-date">
 	  <time datetime="2022-08-08T10:15:22.000Z" itemprop="datePublished">2022-08-08</time>
 	</a>
 </span>
@@ -296,13 +296,13 @@
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/docs/tags/Linux/" rel="tag">Linux</a>
+	<a class="article-tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/docs/posts/linux5.html#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/posts/linux5.html#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
@@ -427,7 +427,7 @@ touch.txt                                                                       
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/posts/linux5.html" title="Linux的Bash——（四）Bash shell 的操作环境" target="_blank" rel="external">http://example.com/posts/linux5.html</a>
+      <a href="https://tanizhugo.github.io/tanizhugo.blog/posts/linux5.html" title="Linux的Bash——（四）Bash shell 的操作环境" target="_blank" rel="external">https://tanizhugo.github.io/tanizhugo.blog/posts/linux5.html</a>
     </li>
     
     <li class="post-copyright-license">
@@ -474,12 +474,12 @@ touch.txt                                                                       
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/docs/posts/slurm1.html" title="Slurm的基本指令"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/posts/slurm1.html" title="Slurm的基本指令"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/docs/posts/linux4.html" title="Linux的Bash——（四）Bash shell 的操作环境"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/posts/linux4.html" title="Linux的Bash——（四）Bash shell 的操作环境"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
@@ -513,10 +513,10 @@ touch.txt                                                                       
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 </script>
 
-<script src="/docs/js/plugin.min.js"></script>
+<script src="/js/plugin.min.js"></script>
 
 
-<script src="/docs/js/application.js"></script>
+<script src="/js/application.js"></script>
 
 
     <script>
@@ -529,14 +529,14 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
             TAGS: '标签',
             UNTITLED: '(未命名)',
         },
-        ROOT_URL: '/docs/',
-        CONTENT_URL: '/docs/content.json',
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
     };
     window.INSIGHT_CONFIG = INSIGHT_CONFIG;
 })(window);
 </script>
 
-<script src="/docs/js/insight.js"></script>
+<script src="/js/insight.js"></script>
 
 
 
