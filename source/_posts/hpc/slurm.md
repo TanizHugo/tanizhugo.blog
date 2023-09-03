@@ -11,10 +11,13 @@ tags:
     - Slurm
 summary: Slurm
 categories: HPC
+img: 
 ---
 
 这是我在公司实习，参与HPC项目开发时候所接触的知识。
 `Slurm`是一个开源的作业调度和集群管理系统。它被设计用于管理大规模的计算集群，如超级计算机、大规模服务器集群等，以实现资源的高效利用和作业的调度。它提供了命令行和可视化界面，使管理员和用户能够管理和监控集群资源的使用情况。
+
+![123412321](https://s2.loli.net/2023/08/31/6GTSYtLefJVm9Rs.png)
 
 关于理论我可能懂得不多，下面是我个人在使用过程中整理出来，非常常用的一些命令，能够快速上手`Slurm`，或者是帮我自己回顾这部分知识。
 
@@ -205,7 +208,6 @@ slurmd(作业调度服务)
 | squeue -n [TAKENAME] | 查看特定节点作业信息 | <img src="https://s2.loli.net/2023/08/20/gPjmc51SnXNGoAV.png"/> |
 |  squeue -j [JOBID]   | 查看指定作业信息     | <img src="https://s2.loli.net/2023/08/20/TiRmr6dohOwQFNs.png"/> |
 | squeue -t=[JOBSTATE] | 查看指定状态作业     | <img src="https://s2.loli.net/2023/08/20/m8SwyX92okBHnV3.png"/> |
-
 
 
 
