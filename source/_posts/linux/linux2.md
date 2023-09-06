@@ -1,6 +1,6 @@
 ---
 title: Linux的Bash——(二)Shell的变量
-date: 2022-07-21 21:26:21
+date: 2022-07-25 21:26:21
 author: Taniz Hugo
 language: zh-CN
 abbrlink: linux2
