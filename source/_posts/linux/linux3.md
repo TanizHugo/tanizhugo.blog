@@ -1,11 +1,16 @@
 ---
 title: Linux的Bash——（三）命名别名与历史命令
-tags: Linux
+date: 2023-07-27 22:19:47
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: linux3
-date: 2022-07-27 23:10:56
+top: false
+is_draft: false
+summary: 继续跟着鸟哥学Linux
+categories: 
+  - Linux
+tags:
+  - Linux指令
 ---
 
 

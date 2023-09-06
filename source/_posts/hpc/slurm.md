@@ -1,17 +1,17 @@
 ---
-title: Slurm的基本指令
+title: Slurm的认识
 date: 2022-08-08 10:15:22
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
-abbrlink: slurm1
+abbrlink: slurm
 top: false
-tags: 
-    - HPC
-    - Slurm
-summary: Slurm
-categories: HPC
-img: 
+is_draft: false
+summary: 这是一篇有关Slurm基本指令的介绍
+categories:
+  - HPC
+tags:
+  - 命令
+  - Slurm
 ---
 
 这是我在公司实习，参与HPC项目开发时候所接触的知识。
@@ -21,36 +21,34 @@ img:
 
 关于理论我可能懂得不多，下面是我个人在使用过程中整理出来，非常常用的一些命令，能够快速上手`Slurm`，或者是帮我自己回顾这部分知识。
 
-### 一些文件的位置
+#### 1. 基本知识
+
+##### 一些文件的位置
 
 * slurmd、slurmdbd、slurmctld日志文件: /var/log/
 * slurmdbd服务的配置文件: /etc/slurm/slurmdbd.conf 
 * slurmctld、slurmd服务的配置文件: /etc/slurm/slurm.conf  
 * 建立slurmctld服务存储其状态等的目录，由 **slurm.conf** 中 `StateSaveLocation`参数定义： /var/spool/slurmctld
 
-### 服务质量(QOS)配置
+##### 服务质量(QOS)配置
 
 对资源进行限制，比如限制用户的单个作业CPU核数、运行中作业总CPU核数、作业时长等，除了利用队列分区等外，还可以利用服务质量(Quality of Service, QOS)。利用Slurm提交作业时，可以为每个作业赋予一个QOS，与作业相关的QOS有三种途径：
 
 * 作业调度优先级：Job Scheduling Priority (qos中的参数`Priority`) priority越大优先级越高
-
 * 作业抢占：Job Preemption (slurm.conf)
-
 * 作业限制：Job Limits (QOS设置)
 
-**部署服务的命令**
-
-
-
-### service：服务
+##### service：服务
 
 slurmdbd(记账服务)
+
 slurmctld(控制管理服务)
+
 slurmd(作业调度服务)
 
 **管理结点** 需要开启以上三种服务， **计算节点** 只需要开启`slurmd 作业调度服务`即可
 
-### NODESTATE：节点状态
+##### NODESTATE：节点状态
 
 节点的状态可以通过命令：**sinfo** 进行查看
 
@@ -67,7 +65,7 @@ slurmd(作业调度服务)
 * unknown、unk：未知原因
 * 如果状态带有后缀 *，表示节点没有响应
 
-### JOBSTATE：作业状态
+##### JOBSTATE：作业状态
 
 作业状态可以通过命令：**squeue** 查看最近正在运行以及正在排队的任务
 也可以通过命令：**sacct** 查看今天一天的任务
@@ -80,8 +78,7 @@ slurmd(作业调度服务)
 * CD\COMPLETED：已完成
 * FAILED：执行失败
 
-
-## 2. sacctmgr：用于查看和修改Slurm账户信息
+#### 2. sacctmgr：用于查看和修改Slurm账户信息
 
 **sacctmgr** 用于查看或者修改Slurm账户信息，Slurm账户信息在数据库中维护，接口由slurmdbd（Slurm Database守护程序）提供，该数据库可以作为单个站点上多台计算机的用户和计算机信息的中央仓库。基于形成所谓的关联的四个参数来记录Slurm账户信息
 记录的Slurm账户信息包括：用户、集群、分区和账户
@@ -93,13 +90,15 @@ slurmd(作业调度服务)
 
 **sacctmgr** 的命令格式一般是 **sacctmgr[options][command]**
 
-## 3. sbatch：用于批处理作业提交。此脚本一般也可以含有一个或者多个srun命令启动并行任务
+#### 3. sbatch：用于批处理作业提交
+
+此脚本一般也可以含有一个或者多个srun命令启动并行任务
 
 准备作业脚本然后通过 `sbatch` 提交是slurm提交任务的最常用手段，为了将作业脚本提交给作业系统，slurm使用
 
     [root@master tanzitao_slurm]# sbatch while.slurm <-- 其中 while.slurm 是自己编写的脚本任务
 
-### 脚本任务内容
+##### 脚本任务内容
 
 |              **options**              | **function**                                                 | **case**                                                     |
 | :-----------------------------------: | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -131,10 +130,9 @@ slurmd(作业调度服务)
     
     python while.py             <-- 执行的作业内容
 
+#### 4. scontrol：显示或设定slurm作业、队列、结点等状态
 
-## 4. scontrol：显示或设定slurm作业、队列、结点等状态
-
-### 查看信息
+##### 查看信息
 
 **sontrol show** 是slurm查询内容的开头，以此可以查询许多的内容
 
@@ -142,7 +140,7 @@ slurmd(作业调度服务)
 * scontrol show node [NODE-NAME]（可忽略） : 查看指定节点信息
 * scontrol show job [JOBID] : 查看某个任务信息
 
-### 更新作业
+##### 更新作业
 
 在任务开始之前发现作业的属性写错了（例如提交错分区，分配资源有误），如果取消重新排队似乎很不划算。如果作业恰好 **正在排队** 可以通过 `scontrol` 命令更新作业的属性
 
@@ -162,7 +160,7 @@ slurmd(作业调度服务)
     minmemorycpu=<megabytes>
     minmemorynode=<megabytes>
 
-## 5. sacct：显示激活的或者已经完成作业或作业步的记账信息
+#### 5. sacct：显示激活的或者已经完成作业或作业步的记账信息
 
 **查询所有任务信息（默认只能查询一天的任务）**
 
@@ -189,7 +187,7 @@ slurmd(作业调度服务)
     ------------ ---------- --------- ---------- ---------- ---------- --------------- -------- ------------------- ------------------- ------------------- ---------- ---------- ---------- ---------- ------------
     753           CANCELLED      root       root     master      while          master        1 2022-08-11T09:50:21 2022-08-11T09:50:21 2022-08-11T09:59:55   00:00:00          1              00:09:34
 
-## 6. sinfo：查看集群状态(常用)
+#### 6. sinfo：查看集群状态(常用)
 
 |     **options**      | **function**         | **case**                                                     |
 | :------------------: | -------------------- | ------------------------------------------------------------ |
@@ -198,8 +196,7 @@ slurmd(作业调度服务)
 | sinfo -t=[NODESTATE] | 查看指定节点状态信息 | <img src="https://s2.loli.net/2023/08/20/Jh5pWlCqXPwBMcj.png"/> |
 | sinfo -p=[PARTITION] | 查看指定队列信息     | <img src="https://s2.loli.net/2023/08/20/aSTHqLFCmhV1uU2.png"/> |
 
-
-## 7. squeue：查看作业信息(常用)
+#### 7. squeue：查看作业信息(常用)
 
 |     **options**      | **function**         | **case**                                                     |
 | :------------------: | -------------------- | ------------------------------------------------------------ |
@@ -210,6 +207,8 @@ slurmd(作业调度服务)
 | squeue -t=[JOBSTATE] | 查看指定状态作业     | <img src="https://s2.loli.net/2023/08/20/m8SwyX92okBHnV3.png"/> |
 
 
+
+以上是我个人在实践当中总结出来的一些常用用法，slurm其实还有更高级的用法，只不过我后面基本没有怎么接触了，希望文章的内容对于刚接触的伙伴有一定的帮助吧！
 
 
 

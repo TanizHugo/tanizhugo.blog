@@ -1,11 +1,17 @@
 ---
 title: Linux的Bash——(二)Shell的变量
-tags: Linux
+date: 2022-07-21 21:26:21
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: linux2
-date: 2022-07-21 21:26:21
+top: false
+is_draft: false
+summary: 继续跟着鸟哥学Linux
+categories: 
+  - Linux
+tags:
+  - Linux指令
+
 ---
 
 

@@ -1,18 +1,23 @@
 ---
 title: 与VPS快速传输的方法
-tags: 其他
+date: 2023-08-26 23:16:09
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
-abbrlink: other3
-date: 2023-08-26 23:16:09
+abbrlink: other1
+top: false
+is_draft: false
+summary: 我是个比较注重效率的人，当我发现SFTP传输真的很慢的时候，于是我就开始找别的方法
+categories: 
+  - 其他
+tags:
+  - SFTP
+  - CuteHttpFileServer
 ---
 
-
 今天我的博客所在的VPS要到期了，我也没打算续费，所以需要迁移到新的VPS上，所以我需要将我的论文和哪些主题文件直接迁移到新的主机上。不过呢因为我新的VPS和旧的VPS之间线路很差（一个国内一个国外），直接`scp`很慢很慢，于是我就想反正都是要迁移的不如先下载到本机，反正也就留个底，以后还要更新的。
-然后我就觉得这个速度也太慢了，因为利用WinSCP这些工具或者是其他的，基本都是采用sftp，如果文件很小，sftp是完全够用的，一旦文件比较大，sftp就不行了，而我又是很心急的人，我就想找个方法解决这个问题。
+然后我就觉得这个速度也太慢了，因为利用WinSCP这些工具或者是其他的，基本都是采用sftp，如果文件很小，sftp是完全够用的，一旦文件比较大，sftp就不行了，而我又是注重效率的人，我就想找个方法解决这个问题。
 
-![img1](https://imgr.whimsical.com/object/CxRiUMs57WDymaB5ALByQM)
+![image-20230906231412781](https://s2.loli.net/2023/09/06/T5iJokCj8U9aGKS.png)
 
 首先就是提出一个很简单的解决思路，既然sftp的方法不好，那我走http不好吗？所以方向很明确，有没有一个服务可以帮我帮我的文件传输通过http完成。
 

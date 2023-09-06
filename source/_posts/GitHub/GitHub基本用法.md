@@ -1,30 +1,20 @@
-\---
-
+---
 title: GitHub基本用法
-
-author: Taniz Hugo
-
-language: zh-CN
-
-top: false
-
-tags:
-
- \- GitHub
-
- \- 指令
-
-abbrlink: github1
-
 date: 2023-08-31 12:18:23
+author: Taniz Hugo
+language: zh-CN
+abbrlink: github1
+top: false
+is_draft: false
+summary: GitHub就不用多说了吧，最大的项目开源库，丰富的学习资源，学习必备，不过学习之前也要学会工具啊，不然光看书不会记笔记怎么行
+categories: 
+  - GitHub
+tags:
+  - GitHub基本指令
+  - 项目管理
+---
 
-categories:  Others
 
-img:  
-
-summary:  GitHub
-
-\---
 
 GitHub 是一个面向开发者的协作平台，主要用于版本控制、源代码管理和协作开发项目。它提供了一个云端的代码托管服务，允许开发者将他们的代码存储在云端仓库中，并能够轻松地与团队成员合作、跟踪代码更改、解决问题和管理软件项目。
 
@@ -156,5 +146,9 @@ git clone git@github.com:TanizHugo/Wendy.git
 
 这些步骤是基本的操作，最好每次提交代码之前都进行如上操作，以下是详细的操作步骤。
 
-##### 1. 拉取仓库内容
+
+
+
+
+（未完。。。待续。。。）
 

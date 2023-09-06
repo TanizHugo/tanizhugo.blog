@@ -1,11 +1,22 @@
 ---
 title: DNS与域名的购买和配置
-tags: 网络
+date: 2023-08-24 17:58:38
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: network1
-date: 2023-08-24 16:44:02
+top: false
+is_draft: false
+summary: 在自学科学上网搭建节点过程中，了解到得一些有关网络的基本知识，于是就开始了总结起来了
+categories: 
+  - 网络
+tags:
+  - DNS
+  - 域名
+  - 域名购买和配置
+  - Linux
+  - namesilo
+  - Cloudflare
+
 ---
 
 

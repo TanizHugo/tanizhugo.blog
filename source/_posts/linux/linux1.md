@@ -1,11 +1,17 @@
 ---
 title: Linux的Bash——(一)认识Bash
-tags: Linux
+date: 2022-07-21 21:18:54
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: linux1
-date: 2022-07-21 21:26:21
+top: false
+is_draft: false
+summary: 第一次接触Linux系统是在大二的课堂上，还记得那时候上课的老师真的很喜欢吹水，同时那时候也没有提起什么兴趣学，直到我的第一份实习，直接上手在Linux系统操作。为了更好的上手，于是我跟着鸟哥开始了Linux的学习~
+categories: 
+  - Linux
+tags:
+  - Linux指令
+
 ---
 
 

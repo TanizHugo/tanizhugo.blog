@@ -1,19 +1,28 @@
 ---
-title: 利用Docker部署前后端分离项目
-tags: 项目搭建
+title:  Docker部署项目
+date: 2023-07-09 11:12:17
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: porject2
-date: 2023-07-09 11:12:17
+top: false
+is_draft: false
+summary: 学会用Docker管理自己的项目
+categories: 
+  - 项目
+tags:
+  - Docker
+  - 前后端分离
+  - 项目部署
+
 ---
+
 
 
 **本文将采用编写各模块dockerfile的方式，利用docker-compose创建镜像和容器**
 
-这里以前端为Vue，后端为Django进行演示
+这里以前端为Vue，后端为Django进行演示。
 
-
+PS：这里并不推荐Nginx单独一个容器，我也是写完博客才觉得不方便，所以请自行斟酌，本文仅供参考。
 
 #### 安装docker以及docker-compose
 

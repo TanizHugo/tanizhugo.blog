@@ -1,12 +1,21 @@
 ---
 title: Docker搭建个人ChatGPT(潘多拉)
-tags: 其他
+date: 2023-07-05 14:06:33
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: other1
-date: 2023-07-05 14:06:33
+top: false
+is_draft: false
+summary: 因为种种原因，国内的没有方法访问ChatGPT，我身边也有许多朋友也想用，于是我就用自己的服务器，搭建了个FakeGPT，让他们也能涌上
+categories: 
+  - AI
+tags:
+  - ChatGPT
+  - Docker
+  - 潘多拉
+
 ---
+
 
 
 #### 安装Docker

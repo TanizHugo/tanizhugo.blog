@@ -1,11 +1,16 @@
 ---
-title: Linux的Bash——（四）Bash shell 的操作环境
-tags: Linux
+title: Linux的Bash——（五）数据流重导向
+date: 2022-08-08 10:15:22
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: linux5
-date: 2022-08-08 10:15:22
+top: false
+is_draft: false
+summary: 继续跟着鸟哥学Linux
+categories: 
+  - Linux
+tags:
+  - Linux指令
 ---
 
 

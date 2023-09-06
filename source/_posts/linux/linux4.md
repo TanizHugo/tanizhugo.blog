@@ -1,11 +1,16 @@
 ---
 title: Linux的Bash——（四）Bash shell 的操作环境
-tags: Linux
+date: 2022-08-04 16:10:57
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
 abbrlink: linux4
-date: 2022-08-04 16:10:57
+top: false
+is_draft: false
+summary: 继续跟着鸟哥学Linux
+categories: 
+  - Linux
+tags:
+  - Linux指令
 ---
 
 

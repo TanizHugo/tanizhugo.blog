@@ -1,11 +1,19 @@
 ---
 title: Linux下运行Jupyter
-tags: 其他
+date: 2023-8-24 12:11:09
 author: Taniz Hugo
 language: zh-CN
-timezone: Asia/Shanghai
-abbrlink: other2
-date: 2023-8-24 12:11:09
+abbrlink: python1
+top: false
+is_draft: false
+summary: 闲来无事琢磨怎么将自己的本地的开发环境全部卸载，但是这不代表说我就放弃了写代码，想想自己有服务器为什么不好好利用起来呢？
+categories: 
+  - Python
+tags:
+  - Linux
+  - Jupyter
+  - Python
+  - 开发环境
 ---
 
 
