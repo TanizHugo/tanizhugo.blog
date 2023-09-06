@@ -1,12 +1,12 @@
 ---
-title: Linux的Bash——(五)数据流重导向
+title: (五)数据流重导向
 date: 2022-08-08 10:15:22
 author: Taniz Hugo
 language: zh-CN
 abbrlink: linux5
 top: false
 is_draft: false
-summary: 继续跟着鸟哥学Linux
+summary: 继续跟着鸟哥学Linux,第五章
 categories: 
   - Linux
 tags:

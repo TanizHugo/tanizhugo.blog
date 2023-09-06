@@ -1,5 +1,5 @@
 ---
-title: Linux的Bash——(一)认识Bash
+title: (一)认识Bash
 date: 2022-07-21 21:18:54
 author: Taniz Hugo
 language: zh-CN

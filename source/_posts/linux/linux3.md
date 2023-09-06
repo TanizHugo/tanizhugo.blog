@@ -1,12 +1,12 @@
 ---
-title: Linux的Bash——(三)命名别名与历史命令
+title: (三)命名别名与历史命令
 date: 2022-07-27 21:18:54
 author: Taniz Hugo
 language: zh-CN
 abbrlink: linux3
 top: false
 is_draft: false
-summary: 继续跟着鸟哥学Linux
+summary: 继续跟着鸟哥学Linux,第三章
 categories: 
   - Linux
 tags:

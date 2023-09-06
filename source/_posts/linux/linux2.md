@@ -1,12 +1,12 @@
 ---
-title: Linux的Bash——(二)Shell的变量
+title: (二)Shell的变量
 date: 2022-07-25 21:26:21
 author: Taniz Hugo
 language: zh-CN
 abbrlink: linux2
 top: false
 is_draft: false
-summary: 继续跟着鸟哥学Linux
+summary: 继续跟着鸟哥学Linux,第二章
 categories: 
   - Linux
 tags:
@@ -465,6 +465,4 @@ content: 变量的内容，这部分是在给予为配置变量的内容
       [tanzitao@manager SCOW]$ username=${username:-root}
       [tanzitao@manager SCOW]$ echo $username
       root                          <-- 加上 ":" 后边亮的内容若是空或者未配置都能够被后面的内容替换
-
-
 
