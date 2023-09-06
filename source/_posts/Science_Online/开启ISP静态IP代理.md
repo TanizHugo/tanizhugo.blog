@@ -1,13 +1,5 @@
 ---
 title: 开启ISP静态IP代理
-tags: Science Online
-author: Taniz Hugo
-language: zh-CN
-timezone: Asia/Shanghai
-abbrlink: SO4
-date: 2023-09-05 10:38:01
-
-title: 开启ISP静态IP代理
 date: 2023-09-05 10:38:01
 author: Taniz Hugo
 language: zh-CN
