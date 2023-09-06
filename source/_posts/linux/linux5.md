@@ -1,5 +1,5 @@
 ---
-title: Linux的Bash——（五）数据流重导向
+title: Linux的Bash——(五)数据流重导向
 date: 2022-08-08 10:15:22
 author: Taniz Hugo
 language: zh-CN
@@ -11,7 +11,6 @@ categories:
   - Linux
 tags:
   - Linux指令
-
 ---
 
 

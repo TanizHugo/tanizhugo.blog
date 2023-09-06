@@ -1,5 +1,5 @@
 ---
-title: Linux的Bash——（四）Bash shell 的操作环境
+title: Linux的Bash——(四)Bash shell 的操作环境
 date: 2022-08-04 16:10:57
 author: Taniz Hugo
 language: zh-CN
@@ -11,7 +11,6 @@ categories:
   - Linux
 tags:
   - Linux指令
-
 ---
 
 
