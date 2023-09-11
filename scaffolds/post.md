@@ -3,12 +3,12 @@ title: {{ title }}
 date: {{ date }}
 author: Taniz Hugo
 language: zh-CN
-categories:
-abbrlink:
-img:
+abbrlink: 
 top: false
-summary: {{path}}
+is_draft: true
+summary: 
+categories: 
+  - 
 tags:
-    -
-    -
+  - 
 ---
