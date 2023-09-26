@@ -1,17 +1,17 @@
 ---
 title: 与VPS快速传输的方法
-date: 2023-08-26 23:16:09
 author: Taniz Hugo
 language: zh-CN
-abbrlink: 
+abbrlink: e2411d4c
 top: false
 is_draft: false
 summary: 我是个比较注重效率的人，当我发现SFTP传输真的很慢的时候，于是我就开始找别的方法
-categories: 
+categories:
   - 其他
 tags:
   - SFTP
   - CuteHttpFileServer
+date: 2023-08-26 23:16:09
 ---
 
 今天我的博客所在的VPS要到期了，我也没打算续费，所以需要迁移到新的VPS上，所以我需要将我的论文和哪些主题文件直接迁移到新的主机上。不过呢因为我新的VPS和旧的VPS之间线路很差（一个国内一个国外），直接`scp`很慢很慢，于是我就想反正都是要迁移的不如先下载到本机，反正也就留个底，以后还要更新的。
