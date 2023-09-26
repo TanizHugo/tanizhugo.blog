@@ -3,7 +3,7 @@ title: 与VPS快速传输的方法
 date: 2023-08-26 23:16:09
 author: Taniz Hugo
 language: zh-CN
-abbrlink: other1
+abbrlink: 
 top: false
 is_draft: false
 summary: 我是个比较注重效率的人，当我发现SFTP传输真的很慢的时候，于是我就开始找别的方法
