@@ -3,7 +3,7 @@ title: Linux系统开启root ssh登录
 date: 2023-9-12 17:36:21
 author: Taniz Hugo
 language: zh-CN
-abbrlink: linux6
+abbrlink: 
 top: false
 is_draft: false
 summary: 薅到了亚马逊云的服务后，第一次接触到ubuntu系统无法用ssh登录，用密钥登录稍显麻烦，所以就找了个方法打开ssh登录的限制
@@ -43,7 +43,7 @@ vim /etc/ssh/sshd_config
 
 
 
-PS：进入vim后 在正常模式下 通过 "\" 快速定位需要找的内容，例如我需要找到`PermitRootLogin `所在的位置 可以输入"\PermitRootLogin "，通过按 'n'可以跳转下个符合查询内容的位置
+PS：进入vim后 在正常模式下 通过符号：`\`  快速定位需要找的内容，例如我需要找到`PermitRootLogin `所在的位置 可以输入"\PermitRootLogin "，通过按 'n'可以跳转下个符合查询内容的位置
 
 1. 修改参数`PermitRootLogin`
 
