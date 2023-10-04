@@ -38,21 +38,21 @@ Anaconda是免费下载的，选择自己的系统下载对于的Python
 
 安装的过程也很简单，基本都是下一步，下面是具体的安装过程：
 
-![image-20230930115246257](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930115246257.png)
+![image-20230930115246257](https://s2.loli.net/2023/10/04/lsQMcAuifwSpRr6.png)
 
-![image-20230930115314029](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930115314029.png)
+![image-20230930115314029](https://s2.loli.net/2023/10/04/WVSm9vo4Ht7fjIP.png)
 
-![image-20230930115340560](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930115340560.png)
+![image-20230930115340560](https://s2.loli.net/2023/10/04/AtRGYHLKUDElzyI.png)
 
-![image-20230930115522857](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930115522857.png)
+![image-20230930115522857](https://s2.loli.net/2023/10/04/KOZ8l1mBk27XoHU.png)
 
 这一步推荐全部都勾上
 
-![image-20230930115938405](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930115938405.png)
+![image-20230930115938405](https://s2.loli.net/2023/10/04/TOPDcdzKHwkStVn.png)
 
 安装完之后一直按Next到这一步，全不勾上
 
-![image-20230930120544102](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930120544102.png)
+![image-20230930120544102](https://s2.loli.net/2023/10/04/YeJ5j2UT4Z8E7mb.png)
 
 ##### 3. 验证
 
@@ -68,7 +68,7 @@ Anaconda是免费下载的，选择自己的系统下载对于的Python
 
 成功返回Anaconda版本号就是代表安装成功
 
-![image-20230930121428913](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930121428913.png)
+![image-20230930121428913](https://s2.loli.net/2023/10/04/5lk6yupYQtL3BOg.png)
 
 
 
@@ -106,7 +106,7 @@ conda activate myenv
 
 成功激活环境后，前面会显示当前环境名
 
-![image-20230930124335845](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930124335845.png)
+![image-20230930124335845](https://s2.loli.net/2023/10/04/Vdj3ugpSkaUrcPA.png)
 
 在不同环境下，我们利用pip工具下载各种Python工具的时候都是互不干扰的，所以要安装某个工具的时候要先计入到对应的环境下载工具，否则有可能不会生效。
 
@@ -136,14 +136,14 @@ conda env remove --name myenv
 
 打开PyCharm，如果你曾经允许过某个程序，右下角会显示使用Python内核，如果没有就会显示：无解释器。点击添加解释器。
 
-![image-20230930131903200](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930131903200.png)
+![image-20230930131903200](https://s2.loli.net/2023/10/04/Z3GfRYkAHPVidOC.png)
 
 选择Conda环境，点击现有环境，在解释器那里选择Anaconda的安装目录下的`envs`文件夹，每个文件夹的名字对应的就是创建的Python环境。
 
 选择对应的环境的名文件夹 下的`python.exe`文件
 
-![image-20230930131547449](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930131547449.png)
+![image-20230930131547449](https://s2.loli.net/2023/10/04/ix75pUrZkXvDKTh.png)
 
 现在可以看到右下角现实的就是刚刚创建的Python环境，这样环境就算创建成功了。
 
-![image-20230930131921217](C:\Users\taniz\AppData\Roaming\Typora\typora-user-images\image-20230930131921217.png)
+![image-20230930131921217](https://s2.loli.net/2023/10/04/rUuMsLlZnpGwWRk.png)
