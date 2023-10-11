@@ -1,0 +1,35 @@
+---
+title: MySQL常用语句
+date: 2023-10-10 10:53:55
+author: Taniz Hugo
+language: zh-CN
+abbrlink: 
+top: false
+is_draft: false
+summary: 最近上班要接触到数据库的查询，这时候才发现，自己平时的SQL的知识如此匮乏，大学没有好好学习的下场啊~ 现在有空就来记录下一些常用的命令
+categories: 
+  - MySQL
+tags:
+  - MySQL常用语句
+---
+
+
+
+#### 前言
+
+最近上班要接触到数据库的查询，这时候才发现，自己平时的SQL的知识如此匮乏，大学没有好好学习的下场啊~ 现在有空就来记录下一些常用的命令。
+
+
+
+#### 查询表B的数据 更新表A
+
+##### 命令
+
+```sql
+UPDATE rpa_tdtgl t
+JOIN rpa_asbll a ON t.bh = a.bh
+SET t.ejcbdw = a.ejcbdw, t.jtjbdw = a.jtjbdw;
+```
+
+##### 知识点
+
