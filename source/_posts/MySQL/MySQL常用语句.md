@@ -33,3 +33,43 @@ SET t.ejcbdw = a.ejcbdw, t.jtjbdw = a.jtjbdw;
 
 ##### 知识点
 
+JOIN --- ON ---
+
+
+
+#### 条件查询筛选特定列
+
+##### 命令
+
+```sql
+
+```
+
+
+
+##### 知识点
+
+
+
+#### 查询字段名
+
+
+
+##### 命令
+
+返回表字段所有信息
+
+```sql
+DESCRIBE your_table_name;
+
+```
+
+查询所有字段名，以逗号形式返回
+
+```sql
+SELECT GROUP_CONCAT(column_name) AS FieldNames
+FROM information_schema.columns
+WHERE table_name = 'your_table_name';
+
+```
+

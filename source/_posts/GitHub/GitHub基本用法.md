@@ -24,7 +24,7 @@ GitHub 是一个面向开发者的协作平台，主要用于版本控制、源�
 
 在一切开始之前必须先确保有git的环境，可以从Git官方网站（https://git-scm.com）下载适用的操作系统的Git版本。
 
-#### 创建SSH密钥
+### 创建SSH密钥
 
 首先这是在进行一切操作之前都必须要要先弄的一个步骤，这是为了更建立更安全、更快速的链接，管理自己的平台。
 
@@ -94,11 +94,23 @@ Hi TanizHugo! You've successfully authenticated, but GitHub does not provide she
 
 如果一切设置正确，应该会看到自己的用户名，代表已经成功了。
 
-#### 创建仓库
+### 创建仓库
 
 GitHub的仓库（Repository，通常简称为"repo"）是一个存储和管理代码、文档和其他项目资源的地方。它是Git版本控制系统的主要概念之一，GitHub则是一个基于Git的代码托管平台，它使得创建、协作和分享仓库变得更加容易和可视化。
 
-#### 1. GitHub中创建仓库
+#### 1. 本地创建仓库
+
+在拉取远程仓库之前，可以现在本地创造一个新的仓库，利用以下命令：
+
+```shell
+git init
+```
+
+一旦执行了 `git init`，Git 会在该目录下创建一个名为 `.git` 的子目录，其中包含了 Git 仓库的配置文件和版本历史信息。你可以在这个仓库中添加文件、进行提交、创建分支等操作，从而有效地管理你的项目代码。这是 Git 的基本操作之一，通常是在开始新项目时执行的第一步。
+
+
+
+#### 2. GitHub中创建仓库
 
  转到[GitHub的网站](https://github.com/)，登录到GitHub帐户。点击右上角头像，选择`Your repository`(你的仓库)，跳转到你的仓库当中。
 
@@ -119,7 +131,9 @@ GitHub的仓库（Repository，通常简称为"repo"）是一个存储和管理�
 
 填写完所有信息后，点击绿色的"Create repository"按钮来创建您的仓库。到此仓库现在已经创建成功了！你将被重定向到您的新仓库的页面，可以在这里找到仓库的URL、仓库设置和其他相关信息。
 
-##### 2. 关联本地
+
+
+#### 3. 关联本地
 
 要在本地编辑GitHub仓库，首先需要将仓库克隆到您的计算机上。在命令行中导航到您要存储仓库的目录，并运行`git clone`，将GitHub仓库克隆到本地。例如，如果要克隆名为 "Wendy" 的仓库，可以运行：
 
@@ -133,9 +147,9 @@ git clone git@github.com:TanizHugo/Wendy.git
 
 无论是HTTPS还是SSH，直接在前面加上`git clone`，然后复制url即可。
 
+​	
 
-
-#### 编辑和提交更改
+### 编辑和提交更改
 
 每次当我们对于文件进行了修改之后，都要将我们的修改内容同步到GitHub上面去。以下是一些基本的Git命令来完成这些操作：
 
@@ -145,6 +159,65 @@ git clone git@github.com:TanizHugo/Wendy.git
 - `git push`：将本地的更改推送到GitHub仓库。
 
 这些步骤是基本的操作，最好每次提交代码之前都进行如上操作，以下是详细的操作步骤。
+
+
+
+### 分支的操作
+
+
+
+#### 1. 查看分支
+
+```shell
+# 查看当前所在分支
+git rev-parse --abbrev-ref HEAD
+
+# 查看本地分支
+git branch
+
+# 查看远程分支
+git branch -r
+
+# 查看所有分支
+git branch -a
+
+# 查看分支的最后提交信息
+git show-branch --all
+
+```
+
+
+
+#### 2. 切换分支
+
+```shell
+# 从已有分支切换到另一个分支
+git checkout branch_name
+
+# 创建并切换到新的分支
+git checkout -b new_branch_name
+
+# 切换到上一个分支
+git checkout -
+
+# 切换到特定提交
+git checkout commit_hash
+
+```
+
+
+
+#### 3. 创建分支
+
+
+
+#### 4. 删除分支
+
+
+
+#### 5. 合并分支
+
+### 创建团队
 
 
 
