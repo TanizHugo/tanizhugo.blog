@@ -1,12 +1,12 @@
 ---
-title: MySQL常用语句
-date: 2023-10-10 10:53:55
+title: CentOS7安装MySQL5.7
+date: 2023-10-25 18:13:39
 author: Taniz Hugo
 language: zh-CN
 abbrlink: 
 top: false
 is_draft: false
-summary: 最近上班要接触到数据库的查询，这时候才发现，自己平时的SQL的知识如此匮乏，大学没有好好学习的下场啊~ 现在有空就来记录下一些常用的命令
+summary: 
 categories: 
   - MySQL
 tags:
@@ -17,7 +17,7 @@ tags:
 
 #### 前言
 
-最近上班要接触到数据库的查询，这时候才发现，自己平时的SQL的知识如此匮乏，大学没有好好学习的下场啊~ 现在有空就来记录下一些常用的命令。
+很久没有写项目了，写项目的时候肯定离不开的就是数据库，原本我是选择用Docker，拉一个镜像搭建的数据库，可是我发现每次都要进入到Docker里面对数据库进行操作太麻烦了，所以我还是打算在搭建一个MySQL的服务。
 
 
 
@@ -72,28 +72,4 @@ FROM information_schema.columns
 WHERE table_name = 'your_table_name';
 
 ```
-
-
-
-
-
-#### 外键
-
-
-
-
-
-#### 索引
-
-
-
-#### 创建用户
-
-```sql
-CREATE USER '新用户'@'主机' IDENTIFIED BY '密码';
-```
-
-
-
-#### 授权
 
