@@ -89,11 +89,21 @@ WHERE table_name = 'your_table_name';
 
 #### 创建用户
 
-```sql
-CREATE USER '新用户'@'主机' IDENTIFIED BY '密码';
+基本命令
+
+```mysql
+CREATE USER '新用户'@'主机' IDENTIFIED BY '密码';	
 ```
 
+##### 例子
 
+创建一个主机IP为'12.34.56.78'，名为'test'的用户，设置密码'123456'
+
+```mysql
+CREATE USER 'test'@'12.34.56.78' IDENTIFIED BY '123456';
+```
+
+创建一个
 
 #### 授权
 
