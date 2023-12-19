@@ -95,15 +95,44 @@ WHERE table_name = 'your_table_name';
 CREATE USER '新用户'@'主机' IDENTIFIED BY '密码';	
 ```
 
-##### 例子
-
-创建一个主机IP为'12.34.56.78'，名为'test'的用户，设置密码'123456'
+例子：创建一个主机IP为'12.34.56.78'，名为'test'的用户，设置密码'123456'
 
 ```mysql
 CREATE USER 'test'@'12.34.56.78' IDENTIFIED BY '123456';
 ```
 
-创建一个
-
 #### 授权
 
+在MySQL中，授权是通过GRANT语句来实现的。
+
+GRANT语句允许给用户或用户组授予特定的权限，以便执行各种操作，如SELECT、INSERT、UPDATE等。
+
+##### 授权所有权限给用户
+
+授予用户在所有数据库（`*.*`）上的所有权限，只能从本地主机（'localhost'）连接，并使用指定的用户名和密码。
+
+```mysql
+GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' IDENTIFIED BY 'password';
+```
+
+##### **授予特定权限给用户**
+
+授予用户在指定数据库（`database_name`）上的SELECT、INSERT和UPDATE权限。
+
+```mysql
+GRANT SELECT, INSERT, UPDATE ON database_name.* TO 'username'@'localhost';
+```
+
+|    授权权限    |                 描述                  |
+| :------------: | :-----------------------------------: |
+|     SELECT     |        允许用户从表中查询记录         |
+|     INSERT     |        允许用户从表中添加记录         |
+|     UPDATE     |        允许用户从表中修改记录         |
+|     DELETE     |        允许用户从表中删除记录         |
+|     CREATE     |      允许用户创建新的数据库或表       |
+|      DROP      |        允许用户删除数据库或表         |
+|     ALTER      |       允许用户修改现有表的结构        |
+| SHOW DATABASES |        允许用户列出所有数据库         |
+|  CREATE USER   | 允许用户创建、更改和删除MySQL用户账户 |
+|  GRANT OPTION  | 允许用户将自己拥有的权限授予其他用户  |
+| ALL PRIVILEGES |             包含所有权限              |
